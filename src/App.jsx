@@ -18,6 +18,7 @@ import UpdateProduct from './components/update/UpdateProductRoot';
 import CardInfo from './pages/CardInfoPage';
 import Category from './components/main/Category';
 import MG from './components/management/management';
+import OC from './components/orders/OrderComplete';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/update/:id" element={<UpdateProduct />} />
         <Route path="/category" element={<Category />} /> 
         <Route path="/mg" element={<MG />} /> 
+        <Route path="/oc" element={<OC />} /> 
       </Routes>
     </Router>
   );
