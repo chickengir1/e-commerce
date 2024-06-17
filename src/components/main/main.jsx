@@ -59,20 +59,23 @@ const Mainpage = () => {
       <LineContainer>
         <Line />
       </LineContainer>
-      */}
+      
       <StyledH2>모아둔 이유</StyledH2>
       <ThemaContainer>
         <ThemaItem />
         <br />
         <ThemaItem />
       </ThemaContainer>
+      */}
       <Container>
         <Puzzle2 />
       </Container>
+      {/*
       <StyledH2>브랜드 갤러리</StyledH2>
       <BrandContainer>
         <Brand />
       </BrandContainer>
+      */}
     </>
   );
 };
