@@ -35,12 +35,12 @@ export const ProductContainer = styled.div`
 `;
 
 export const Products = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
   width: 95%;
   height: 100%;
   justify-content: center;
-  gap: 15px;
 `;
 
 export const ProductBox = styled.div`

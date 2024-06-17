@@ -12,11 +12,11 @@ const useFetchData = (url) => {
       try {
         const response = await fetch(url);
         if (!response.ok) {
-          throw new Error('Error: Data not found');
+          throw new Error
         }
         const contentType = response.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
-          throw new Error('Received non-JSON response');
+          throw new Error
         }
         const data = await response.json();
         setData(data);

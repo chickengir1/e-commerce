@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import ProductList from '../components/product/ProductList';
 import Sidebar from '../components/sidebar/Sidebar';
 import { PageLayout, SidebarLayout, ContentLayout } from '../GlobalStyles/LayoutStyles';
@@ -8,9 +9,13 @@ import useFetchData from '../hook/useFetchData';
 import background from "../../public/assets/product.png";
 import FilterButtons from '../components/product/FilterButtons';
 import BackgroundWrapper from '../components/product/styles/BackgroundWrapper';
-import {ContentWrapper} from '../components/product/styles/ContentWrapper';
+import { ContentWrapper } from '../components/product/styles/ContentWrapper';
 
 const ProductPage = () => {
+  const location = useLocation();
+  const { state } = location;
+  const { filteredProducts: initialFilteredProducts } = state || { filteredProducts: null };
+
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selectedBrand, setSelectedBrand] = useState(null);
@@ -41,7 +46,8 @@ const ProductPage = () => {
     }
   };
 
-  const filteredProducts = filterProducts(products, filterType, selectedBrand, selectedCategory);
+  const filteredProducts = initialFilteredProducts || filterProducts(products, filterType, selectedBrand, selectedCategory);
+
   const searchedProducts = searchProducts(filteredProducts, searchQuery);
 
   return (
@@ -52,16 +58,18 @@ const ProductPage = () => {
           <Sidebar />
         </SidebarLayout>
         <ContentLayout>
-          <FilterButtons 
-            filterType={filterType}
-            brands={brands}
-            categories={categories}
-            handleFilter={handleFilter}
-            setSelectedBrand={setSelectedBrand}
-            setSelectedCategory={setSelectedCategory}
-            selectedBrand={selectedBrand}
-            selectedCategory={selectedCategory}
-          />
+          {!initialFilteredProducts && (
+            <FilterButtons 
+              filterType={filterType}
+              brands={brands}
+              categories={categories}
+              handleFilter={handleFilter}
+              setSelectedBrand={setSelectedBrand}
+              setSelectedCategory={setSelectedCategory}
+              selectedBrand={selectedBrand}
+              selectedCategory={selectedCategory}
+            />
+          )}
           <BackgroundWrapper>
             <BackgroundImage />
             <ProductList products={searchedProducts} searchQuery={searchQuery} />

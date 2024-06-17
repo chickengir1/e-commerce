@@ -2,17 +2,22 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, ImgBtn } from './styled/mainCategory';
 import useFetchData from '../../hook/useFetchData';
+import API_PATHS from "../../utils/apiPaths";
 
 function Category() {
-  const CategoryUrl = `/api/category`;
-  const { data, loading, error } = useFetchData(CategoryUrl);
+  const { data: categories, loading: categoriesLoading, error: categoriesError } = useFetchData(API_PATHS.CATEGORIES);
+  const { data: products, loading: productsLoading, error: productsError } = useFetchData(API_PATHS.PRODUCTS);
 
-  if (loading) {
+  if (categoriesLoading || productsLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
+  if (categoriesError) {
+    return <div>Error: {categoriesError.message}</div>;
+  }
+
+  if (productsError) {
+    return <div>Error: {productsError.message}</div>;
   }
 
   const images = [
@@ -26,7 +31,13 @@ function Category() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-      navigate(`/products/${category.name}`);
+      const filteredProducts = products.filter(
+        (product) => product.category && product.category._id && product.category._id.toString() === category._id.toString()
+      );
+      console.log(`Category: ${category.name}`);
+      console.log(`Category ID: ${category._id}`);
+      console.log(filteredProducts);
+      navigate(`/products/${category.name}`, { state: { filteredProducts } });
     };
 
     return (
@@ -40,8 +51,8 @@ function Category() {
   return (
     <div>
       <Container>
-        {data.map((category, index) => (
-          <ImageBtn key={category._id} imgSrc={images[index]} category={category} />
+        {categories.map((category, index) => (
+          <ImageBtn key={category._id} imgSrc={images[index % images.length]} category={category} />
         ))}
       </Container>
     </div>

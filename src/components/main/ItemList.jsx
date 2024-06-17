@@ -20,12 +20,14 @@ import {
 import useFetchData from "../../hook/useFetchData";
 import API_PATHS from "../../utils/apiPaths";
 
+const brandImages = {
+  나이키: Nike,
+  아디다스: Adidas,
+  푸마: Puma,
+};
+
 const ItemList = () => {
   const navigate = useNavigate();
-
-  const handleNavigation = () => {
-    navigate("/products");
-  };
 
   const {
     data: brandData,
@@ -37,6 +39,7 @@ const ItemList = () => {
     loading: productLoading,
     error: productError,
   } = useFetchData(API_PATHS.PRODUCTS);
+
   const [selectedBrandName, setSelectedBrandName] = useState("");
 
   useEffect(() => {
@@ -49,32 +52,12 @@ const ItemList = () => {
   if (brandError) return <div>Error: {brandError.message}</div>;
   if (productError) return <div>Error: {productError.message}</div>;
 
-  const brand = brandData.find((brand) => brand.name === selectedBrandName);
+  const selectedBrand = brandData.find((brand) => brand.name === selectedBrandName);
+  const filteredProducts = productData.filter(
+    (product) => product.brand && product.brand._id === selectedBrand._id
+  );
 
-  const firstBox = productData
-    .filter((product) => product.brand && product.brand._id === brand._id)
-    .slice(0, 2);
-
-  const secondBox = productData
-    .filter((product) => product.brand && product.brand._id === brand._id)
-    .slice(2, 4);
-
-  const handleBrandSelect = (brandName) => {
-    setSelectedBrandName(brandName);
-  };
-
-  const getBrandImage = (brandName) => {
-    switch (brandName) {
-      case "나이키":
-        return Nike;
-      case "아디다스":
-        return Adidas;
-      case "푸마":
-        return Puma;
-      default:
-        return null;
-    }
-  };
+  const handleBrandSelect = (brandName) => setSelectedBrandName(brandName);
 
   return (
     <Container>
@@ -92,45 +75,18 @@ const ItemList = () => {
         ))}
       </ButtonContainer>
       <Brand>
-        <BrandImage src={getBrandImage(selectedBrandName)} alt="Brand" />
+        <BrandImage src={brandImages[selectedBrandName]} alt="Brand" />
         <ProductContainer>
           <Products>
-            {firstBox.map((product) => (
-              <ProductBox key={product._id} onClick={handleNavigation}>
+            {filteredProducts.slice(0, 4).map((product) => (
+              <ProductBox key={product._id} onClick={() => navigate("/products")}>
                 <ProductImage
-                  src={
-                    product.images && product.images[0]
-                      ? product.images[0]
-                      : "https://via.placeholder.com/150"
-                  }
+                  src={product.images?.[0] || "https://via.placeholder.com/150"}
                   alt={product.name}
                 />
                 <ProductName>{product.name}</ProductName>
                 <ProductNameSmall>{product.description}</ProductNameSmall>
-                <ProductNameMedium>{`${product.price.toLocaleString(
-                  "ko-KR"
-                )} 원`}</ProductNameMedium>
-              </ProductBox>
-            ))}
-          </Products>
-        </ProductContainer>
-        <ProductContainer>
-          <Products>
-            {secondBox.map((product) => (
-              <ProductBox key={product._id} onClick={handleNavigation}> 
-                <ProductImage
-                  src={
-                    product.images && product.images[0]
-                      ? product.images[0]
-                      : "https://via.placeholder.com/150"
-                  }
-                  alt={product.name}
-                />
-                <ProductName>{product.name}</ProductName>
-                <ProductNameSmall>{product.description}</ProductNameSmall>
-                <ProductNameMedium>{`${product.price.toLocaleString(
-                  "ko-KR"
-                )} 원`}</ProductNameMedium>
+                <ProductNameMedium>{`${product.price.toLocaleString("ko-KR")} 원`}</ProductNameMedium>
               </ProductBox>
             ))}
           </Products>
