@@ -58,8 +58,12 @@ const RegisterBox = () => {
         }
 
         const { name, email, password, phoneNumber } = formData;
+        const formatPhoneNumber = phoneNumber.replace(/-/g, '');
+
+        console.log('핸폰 번호 양식', formatPhoneNumber);
+
         try {
-            await postData({ name, email, password, phoneNumber });
+            const result = await postData({ name, email, password, phoneNumber: formatPhoneNumber });
             setNotification("회원가입이 완료되었습니다!");
             await delay(1500);
             setNotification("");

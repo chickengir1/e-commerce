@@ -4,7 +4,7 @@ export const UpdateProductLayOut = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 `;
 

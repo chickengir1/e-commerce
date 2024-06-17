@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UpdateProduct from "./UpdateProduct";
+import Navbar from "../nav/nav"
 import { ButtonStyled, TitleStyled } from "./styles/Content";
 import { UpdateProductLayOut } from "./styles/UpdateProductLayOut";
 import useProductUpdateForm from "../../hook/useUpdateProductForm";
 import Notification from "../notification/Notification";
 import useFetchOptions from "../../hook/useFetchOptions";
 import useUpdateProductCategory from "../../hook/useUpdateProductCategory"
+import { PageLayout, SidebarLayout, ContentLayout } from "../../GlobalStyles/LayoutStyles";
+import Sidebar from "../sidebar/Sidebar";
+import Footer from "../footer/footer";
 import API_PATHS from "../../utils/apiPaths";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -49,9 +53,16 @@ const UpdateProductRoot = () => {
   };
 
   return (
+    <>
+    <Navbar/>
+    <PageLayout>
+        <SidebarLayout>
+          <Sidebar />
+        </SidebarLayout>
     <div style={{ padding: "50px", width: "100%", height: "auto", marginBottom: "5rem" }}>
       {notification && <Notification message={notification} />}
-      <Header title="제품 정보 수정" />
+      <ContentLayout>
+      <HeaderTitle title="제품 정보 수정" />
       <UpdateProductLayOut>
         <UpdateProduct
           data={productData}
@@ -60,19 +71,23 @@ const UpdateProductRoot = () => {
           categories={categories}
         />
       </UpdateProductLayOut>
-      <Footer onSave={handleSave} />
+      <FooterButton onSave={handleSave} />
+      </ContentLayout>
     </div>
+    </PageLayout>
+    <Footer/>
+    </>
   );
 };
 
-const Header = ({ title }) => (
-  <div style={{ display: "flex", width: "50%", margin: "0 auto" }}>
+const HeaderTitle = ({ title }) => (
+  <div style={{ display: "flex", width: "80%", margin: "0 auto" }}>
     <TitleStyled>{title}</TitleStyled>
   </div>
 );
 
-const Footer = ({ onSave }) => (
-  <div style={{ display: "flex", width: "50%", margin: "0 auto", marginTop: "15px", justifyContent: "end" }}>
+const FooterButton = ({ onSave }) => (
+  <div style={{ display: "flex", width: "80%", margin: "0 auto", marginTop: "15px", justifyContent: "end" }}>
     <ButtonStyled onClick={onSave}>업데이트</ButtonStyled>
   </div>
 );

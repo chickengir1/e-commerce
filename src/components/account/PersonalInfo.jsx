@@ -18,42 +18,59 @@ import Notification from "../notification/Notification";
 import usePersonalInfo from "../../hook/usePersonalInfo";
 import API_PATHS from "../../utils/apiPaths";
 
-const PersonalInfoForm = ({ formData, handleChange }) => (
-  <>
-    <InputGroup>
-      <Label>이름</Label>
-      <Input
-        type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-    </InputGroup>
-    <InputGroup>
-      <Label>이메일</Label>
-      <Input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-    </InputGroup>
-    <InputGroup>
-      <Label>전화번호</Label>
-      <Input
-        type="tel"
-        id="phone"
-        name="phoneNumber"
-        pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-        required
-        value={formData.phoneNumber}
-        onChange={handleChange}
-      />
-    </InputGroup>
-  </>
-);
+const formatPhoneNumber = (value) => {
+  const phoneNumber = value.replace(/\D/g, ""); 
+  let formattedNumber = "";
+  
+  if (phoneNumber.length > 0) {
+      formattedNumber += phoneNumber.slice(0, 3);
+  }
+  if (phoneNumber.length > 3) {
+      formattedNumber += "-" + phoneNumber.slice(3, 7);
+  }
+  if (phoneNumber.length > 7) {
+      formattedNumber += "-" + phoneNumber.slice(7, 11);
+  }
+  
+  return formattedNumber;
+};
+
+const PersonalInfoForm = ({ formData, handleChange }) => {
+  return (
+    <>
+      <InputGroup>
+        <Label>이름</Label>
+        <Input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </InputGroup>
+      <InputGroup>
+        <Label>이메일</Label>
+        <Input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </InputGroup>
+      <InputGroup>
+        <Label>전화번호</Label>
+        <Input
+          type="tel"
+          name="phoneNumber"
+          value={formatPhoneNumber(formData.phoneNumber)}
+          onChange={handleChange}
+          required
+        />
+      </InputGroup>
+    </>
+  );
+};
 
 const PersonalInfo = ({ user, mockUser }) => {
   const { formData, notification, handleChange, handleSubmit } = usePersonalInfo(user, API_PATHS.USER); 

@@ -15,39 +15,65 @@ const usePersonalInfo = (initialUser, apiUrl) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: name === "phoneNumber" ? formatPhoneNumber(value) : value,
     }));
+  };
+
+  const formatPhoneNumber = (value) => {
+    const phoneNumber = value.replace(/\D/g, ""); 
+    let formattedNumber = "";
+    
+    if (phoneNumber.length > 0) {
+        formattedNumber += phoneNumber.slice(0, 3);
+    }
+    if (phoneNumber.length > 3) {
+        formattedNumber += "-" + phoneNumber.slice(3, 7);
+    }
+    if (phoneNumber.length > 7) {
+        formattedNumber += "-" + phoneNumber.slice(7, 11);
+    }
+    
+    return formattedNumber;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const errorMessage = validateForm(formData, initialUser);
     if (errorMessage) {
       setNotification(errorMessage);
       await delay(1500);
       setNotification("");
-    } else {
-      try {
-        const response = await fetch(apiUrl, { 
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+      return;
+    }
+    console.log(validateForm)
 
-        if (!response.ok) {
-          throw new Error("Failed to update user information");
-        }
+    const cleanedData = {
+      ...formData,
+      phoneNumber: formData.phoneNumber.replace(/-/g, ''),
+    };
 
-        setNotification("회원정보가 성공적으로 변경되었습니다.");
-        await delay(1500);
-        setNotification("");
-      } catch (error) {
-        setNotification("회원정보 변경에 실패했습니다.");
-        await delay(1500);
-        setNotification("");
+    try {
+      const response = await fetch(apiUrl, { 
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cleanedData),
+      });
+
+      if (!response.ok) {
+        const errorResponse = await response.json();
+        throw new Error(errorResponse.message);
       }
+
+      setNotification("회원정보가 성공적으로 변경되었습니다.");
+      await delay(1500);
+      setNotification("");
+    } catch (error) {
+      setNotification(error.message);
+      await delay(1500);
+      setNotification("");
     }
   };
 
