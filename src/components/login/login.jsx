@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import usePostRequest from "../../hook/usePostRequest";
 import { Title, LineContainer, Line } from "./styles/LoginStyles";
 import Input from "./Input";
 import LoginButton from "./LoginButton";
 import Oauth from "./Oauth";
 import API_PATHS from '../../utils/apiPaths';
+import useAuthStatus from '../../hook/useAuthStatus';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { data, loading, error, postData } = usePostRequest(API_PATHS.LOGIN);
-  const [cookies, setCookie] = useCookies(['loginstate']);
+  const { setIsLoggedIn } = useAuthStatus();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,10 +22,11 @@ const Login = () => {
 
   useEffect(() => {
     if (data) {
-      setCookie("loginstate", data.token, { path: '/' });
+      sessionStorage.setItem('session', data.token);
+      setIsLoggedIn(true);
       navigate("/");
     }
-  }, [data, navigate, setCookie]);
+  }, [data, navigate, setIsLoggedIn]);
 
   return (
     <>
@@ -37,7 +38,7 @@ const Login = () => {
         setPassword={setPassword} 
         handleLogin={handleLogin} 
         loading={loading} 
-        error={error}
+        error={error} 
       />
       <LineContainer style={{ margin: "1.5rem" }}>
         <Line />

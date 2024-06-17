@@ -20,7 +20,6 @@ const useCardInfo = () => {
     value: String(new Date().getFullYear() + i),
     label: String(new Date().getFullYear() + i),
   }));
-
   const handleCardNumberChange = (e) => {
     const formattedNumber = e.target.value
       .replace(/\s/g, "")
@@ -28,13 +27,15 @@ const useCardInfo = () => {
       .trim();
     setCardInfo((prevInfo) => ({ ...prevInfo, cardNumber: formattedNumber }));
   };
-
-  const handleInputChange = (key, value) => {
+  
+  const handleInputChange = (key) => (e) => {
+    const value = e.target.value;
     setCardInfo((prevInfo) => ({ ...prevInfo, [key]: value }));
   };
 
-  const handleSelectChange = (key, option) => {
-    setCardInfo((prevInfo) => ({ ...prevInfo, [key]: option.value }));
+  const handleSelectChange = (key) => (e) => {
+    const value = e.target.value;
+    setCardInfo((prevInfo) => ({ ...prevInfo, [key]: value }));
   };
 
   return {
@@ -42,8 +43,8 @@ const useCardInfo = () => {
     months,
     years,
     handleCardNumberChange,
-    handleInputChange,
-    handleSelectChange,
+    handleInputChange, 
+    handleSelectChange, 
   };
 };
 

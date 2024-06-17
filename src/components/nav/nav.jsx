@@ -1,74 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { Header, Logo, Navbar, NavLink, SearchContainer, SearchButton, SearchInput } from './Stylednav';
-import { useCookieManager } from '../../utils/cookies';
+import useAuthStatus from '../../hook/useAuthStatus';
+import usePostRequest from '../../hook/usePostRequest';
+import API_PATHS from '../../utils/apiPaths';
 
 const NavBar = ({ setSearchQuery, searchInputRef }) => {
+  const { isLoggedIn, setIsLoggedIn } = useAuthStatus();
   const [searchActive, setSearchActive] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const [cookies] = useCookies(['loginstate']);
-  const { clearAllCookies } = useCookieManager();
+  const { postData } = usePostRequest(API_PATHS.LOGOUT);
 
-  useEffect(() => {
-    setIsLoggedIn(!!cookies.loginstate);
-  }, [cookies]);
-
-  const handleSearchClick = () => {
+  const handleSearch = () => {
     if (searchActive && setSearchQuery && searchInputRef) {
       setSearchQuery(searchInputRef.current);
     }
     setSearchActive(prev => !prev);
   };
 
-  const handleSearchChange = (e) => {
-    if (searchInputRef) {
-      searchInputRef.current = e.target.value;
-    }
-  };
-
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-
   const handleLogout = async () => {
     try {
-      const response = await fetch('/api/login/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        clearAllCookies();
-        setIsLoggedIn(false);
-        navigate('/');
-      } else {
-        console.error('로그아웃에 실패했습니다.');
-      }
+      console.log('세션 삭제');
+      sessionStorage.removeItem('session');
+      setIsLoggedIn(false);
+      console.log('로그아웃 요청 전송');
+      await postData();
+      console.log('홈으로 이동');
+      navigate('/');
     } catch (error) {
-      console.error('로그아웃 요청 중 오류가 발생했습니다.', error);
+      console.error('로그아웃 요청 중 오류가 발생했습니다:', error.message);
     }
   };
 
   return (
     <Header>
-      <Logo src="/assets/logo2.png" onClick={() => handleNavigation('/')} />
+      <Logo src="/assets/logo2.png" onClick={() => navigate('/')} />
       <Navbar>
         {setSearchQuery && searchInputRef && (
           <SearchContainer>
-            <SearchInput 
-              type="text" 
-              placeholder="SEARCH" 
-              className={searchActive ? 'active' : ''} 
-              onChange={handleSearchChange}
+            <SearchInput
+              type='text'
+              placeholder='SEARCH'
+              className={searchActive ? 'active' : ''}
+              onChange={e => {
+                if (searchInputRef) searchInputRef.current = e.target.value;
+              }}
             />
-            <SearchButton 
-              className={searchActive ? 'active' : ''} 
-              onClick={handleSearchClick}
-            >
+            <SearchButton className={searchActive ? 'active' : ''} onClick={handleSearch}>
               {searchActive ? 'CLICK' : 'SEARCH'}
             </SearchButton>
           </SearchContainer>
@@ -76,11 +54,11 @@ const NavBar = ({ setSearchQuery, searchInputRef }) => {
         {isLoggedIn ? (
           <>
             <NavLink onClick={handleLogout}>LOGOUT</NavLink>
-            <NavLink onClick={() => handleNavigation('/carts')}>CART</NavLink>
-            <NavLink onClick={() => handleNavigation('/account')}>MYPAGE</NavLink>
+            <NavLink onClick={() => navigate('/carts')}>CART</NavLink>
+            <NavLink onClick={() => navigate('/account')}>MYPAGE</NavLink>
           </>
         ) : (
-          <NavLink onClick={() => handleNavigation('/login')}>LOGIN</NavLink>
+          <NavLink onClick={() => navigate('/login')}>LOGIN</NavLink>
         )}
       </Navbar>
     </Header>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import API_PATHS from "../utils/apiPaths";
 
 const usePostRequest = (url) => {
   const [data, setData] = useState(null);
@@ -10,27 +11,31 @@ const usePostRequest = (url) => {
     setError(null);
 
     try {
-      const response = await fetch(url, {
+      const options = {
         method: "POST",
-        headers: {
+        credentials: 'include',
+      };
+
+      if (body || url !== API_PATHS.LOGOUT) {
+        options.headers = {
           "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-        credentials: 'include'
-      });
+        };
+        options.body = JSON.stringify(body);
+      }
+
+      const response = await fetch(url, options);
 
       if (!response.ok) {
         const errorData = await response.json();
-        const errorMessage = errorData.message ?? errorData.error;
-        throw new Error(errorMessage);  
+        throw new Error(errorData.message || response.statusText);
       }
 
       const data = await response.json();
       setData(data);
-      return data; 
+      return data;
     } catch (err) {
       setError(err.message);
-      throw err; 
+      throw err;
     } finally {
       setLoading(false);
     }

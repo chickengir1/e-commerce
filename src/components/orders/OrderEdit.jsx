@@ -67,9 +67,9 @@ const OrderEdit = ({ order, closeModal }) => {
                             </>
                         ) : (
                             <>
-                                <div class="address">주소 1{address1}</div>
-                                <div class="address">주소 2{address2}</div>
-                                <div class="address">우편 번호{postalCode}</div>
+                                <div className="address">주소 1{address1}</div>
+                                <div className="address">주소 2{address2}</div>
+                                <div className="address">우편 번호{postalCode}</div>
                             </>
                         )}
                     </Address>

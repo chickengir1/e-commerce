@@ -5,21 +5,25 @@ import { DelBtn } from "./styles/PasswordChangeStyles";
 import { deleteUserAccount } from '../../utils/api';
 import Notification from '../notification/Notification';
 import { useNavigate } from 'react-router-dom';
-import { useCookieManager } from '../../utils/cookies';
+import usePostRequest from '../../hook/usePostRequest';
+import API_PATHS from '../../utils/apiPaths';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const Account = ({ user, mockUser }) => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState("");
-  const { clearAllCookies } = useCookieManager();
+  const { postData } = usePostRequest(API_PATHS.LOGOUT);
 
   const handleDeleteAccount = async () => {
     if (window.confirm("정말로 회원 탈퇴를 하시겠습니까?")) {
       try {
-        await deleteUserAccount();
+        await Promise.all([
+          deleteUserAccount(),
+          postData(),
+        ]);
+        sessionStorage.removeItem('session');
         setNotification("회원 탈퇴가 완료되었습니다.");
-        clearAllCookies();
       } catch (error) {
         setNotification("회원 탈퇴에 실패했습니다. 다시 시도해주세요.");
       } finally {
