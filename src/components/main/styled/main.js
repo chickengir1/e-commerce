@@ -121,3 +121,7 @@ export const CategoryTitle = styled.h2`
     background: linear-gradient(to right, #4169e1, #feb47b);
   }
 `;
+
+export const Container = styled.div`
+  margin: 70px 0;
+`
