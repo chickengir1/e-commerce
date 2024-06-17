@@ -15,7 +15,7 @@ const useFetchData = (url) => {
           throw new Error('Error: Data not found');
         }
         const contentType = response.headers.get('content-type');
-        if (!contentType ?? !contentType.includes('application/json')) {
+        if (!contentType || !contentType.includes('application/json')) {
           throw new Error('Received non-JSON response');
         }
         const data = await response.json();
