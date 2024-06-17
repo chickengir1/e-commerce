@@ -36,16 +36,18 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
       },
     };
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const existingItemIndex = cart.findIndex(item => item.productId === productId && item.color === selectedColor);
 
-    if (existingItemIndex !== -1) {
-      cart[existingItemIndex].sizes[selectedSize] = (cart[existingItemIndex].sizes[selectedSize] || 0) + quantity;
-    } else {
-      cart.push(cartItem);
-    }
+    const updatedCart = existingItemIndex !== -1
+      ? cart.map((item, index) =>
+        index === existingItemIndex
+          ? { ...item, sizes: { ...item.sizes, [selectedSize]: (item.sizes[selectedSize] || 0) + quantity } }
+          : item
+      )
+      : [...cart, cartItem];
 
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
     setNotification('장바구니에 추가되었습니다.');
 
     setTimeout(() => {
