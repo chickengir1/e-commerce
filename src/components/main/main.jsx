@@ -50,6 +50,7 @@ const Mainpage = () => {
         <ItemList />
       </ItemContainer>
       </div>
+      {/* 다은님 작성하시는 페이지 완성되면 주석 해제 하면 됩니다
       <LineContainer>
         <Line />
       </LineContainer>
@@ -63,6 +64,7 @@ const Mainpage = () => {
       <BrandContainer>
         <Brand />
       </BrandContainer>
+      */}
     </>
   );
 };
