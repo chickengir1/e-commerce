@@ -33,17 +33,14 @@ const customStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: '#fff',
     border: 'none'
   },
 };
 
-const OrderItem = ({ order }) => {
+const OrderItem = ({ order, onDelete }) => {
   const { order_date, status, product, order_id } = order;
-  const { name: productName, variants } = product;
-  const { price, images, color, size, stock } = variants[0];
-
-  const totalPrice = price * stock;
+  const { name: productName, orderItems } = product;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -56,22 +53,22 @@ const OrderItem = ({ order }) => {
         <OrderLeftSection>
           <OrderDate>{order_date}</OrderDate>
           <OrderStatus>{status}</OrderStatus>
-          <ProductDetails>
-            <ProductImage src={images[0]} alt={productName} />
-            <div>
-              <OrderProduct>{`${productName} - ${color} / ${size}`}</OrderProduct>
-              <div style={{ display: "flex" }}>
-                <OrderPrice>{`${price.toLocaleString("ko-KR")} 원 -`}</OrderPrice>
-                <OrderPrice>{`총 금액 : ${totalPrice.toLocaleString("ko-KR")} 원`}</OrderPrice>
-              </div>
-            </div>
-          </ProductDetails>
+            {orderItems.map((item, index) => (
+              <ProductDetails key={index} >
+                <ProductImage src={item.images[0]} alt={productName} />
+                <div>
+                <OrderProduct>{`${productName} - ${item.color} / ${item.size}`}</OrderProduct>
+                <OrderPrice>{`총 금액 : ${(item.totalPrice).toLocaleString("ko-KR")} 원`}</OrderPrice>
+                <OrderPrice>{`${item.stock} X ${(item.price).toLocaleString("ko-KR")} 원`}</OrderPrice>
+                </div>
+              </ProductDetails>
+            ))}
         </OrderLeftSection>
         <OrderRightSection>
           <OrderActions>
             <OrderPrice>{`ID - #${order_id}`}</OrderPrice>
             <div style={{ display: "flex", gap: "5px" }}>
-              <OrderActionsButton>주문 취소</OrderActionsButton>
+              <OrderActionsButton onClick={() => onDelete(order_id)}>주문 취소</OrderActionsButton>
               <OrderActionsButton onClick={openModal}>주문 수정</OrderActionsButton>
             </div>
           </OrderActions>

@@ -4,18 +4,18 @@ export const PageContainer = styled.div`
   display: flex;
   gap: 16px;
   padding: 16px;
-  background: #F4F6F9;
+  background: #f4f6f9;
   width: 95%;
   margin: 0 auto;
   border-radius: 15px;
-  border: 1px solid #97A3C9;
+  border: 1px solid #97a3c9;
 `;
 
 export const OrderContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  border: 1px solid #DAE1F4;
+  border: 1px solid #dae1f4;
   border-radius: 8px;
   padding: 16px;
   background: #fff;
@@ -43,12 +43,13 @@ export const OrderRightSection = styled.div`
 
 export const ProductDetails = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  width: 100%;
 `;
 
 export const ProductImage = styled.img`
   width: 50px;
-  height: 50px;
+  height: 60px;
   margin-right: 8px;
 `;
 

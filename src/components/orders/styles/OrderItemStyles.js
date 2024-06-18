@@ -27,8 +27,9 @@ export const OrderPrice = styled.div`
 
 export const OrderActionsButton = styled.button`
   font-size: 14px;
-  padding: 8px 16px;
-  border: 1px solid #7485BC;
+  height: 45px;
+  padding: 6px 14px;
+  border: 1px solid #7485bc;
   border-radius: 4px;
   background-color: #fff;
   color: #000;

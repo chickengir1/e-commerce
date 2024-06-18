@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header, Logo, Navbar, NavLink, SearchContainer, SearchButton, SearchInput } from './Stylednav';
 import useAuthStatus from '../../hook/useAuthStatus';
-import usePostRequest from '../../hook/usePostRequest';
+import usePostRequest from '../../hook/useLogoutRequest';
 import API_PATHS from '../../utils/apiPaths';
 
 const NavBar = ({ setSearchQuery, searchInputRef }) => {
   const { isLoggedIn, setIsLoggedIn } = useAuthStatus();
   const [searchActive, setSearchActive] = useState(false);
   const navigate = useNavigate();
-  const { postData } = usePostRequest(API_PATHS.LOGOUT);
+  const { logout } = usePostRequest(API_PATHS.LOGOUT);
 
   const handleSearch = () => {
     if (searchActive && setSearchQuery && searchInputRef) {
@@ -24,7 +24,7 @@ const NavBar = ({ setSearchQuery, searchInputRef }) => {
       sessionStorage.removeItem('session');
       setIsLoggedIn(false);
       console.log('로그아웃 요청 전송');
-      await postData();
+      await logout();
       console.log('홈으로 이동');
       navigate('/');
     } catch (error) {

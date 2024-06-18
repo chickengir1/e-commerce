@@ -5,7 +5,7 @@ import { DelBtn } from "./styles/PasswordChangeStyles";
 import { deleteUserAccount } from '../../utils/api';
 import Notification from '../notification/Notification';
 import { useNavigate } from 'react-router-dom';
-import usePostRequest from '../../hook/usePostRequest';
+import usePostRequest from '../../hook/useLogoutRequest';
 import API_PATHS from '../../utils/apiPaths';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -13,14 +13,14 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Account = ({ user, mockUser }) => {
   const navigate = useNavigate();
   const [notification, setNotification] = useState("");
-  const { postData } = usePostRequest(API_PATHS.LOGOUT);
+  const { logout } = usePostRequest(API_PATHS.LOGOUT);
 
   const handleDeleteAccount = async () => {
     if (window.confirm("정말로 회원 탈퇴를 하시겠습니까?")) {
       try {
         await Promise.all([
           deleteUserAccount(),
-          postData(),
+          logout(),
         ]);
         sessionStorage.removeItem('session');
         setNotification("회원 탈퇴가 완료되었습니다.");

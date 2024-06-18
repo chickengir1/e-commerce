@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import OrderList from "../components/orders/OrderList";
 import { PageContainer } from "../components/orders/styles/PageStyles";
 import {
@@ -8,84 +8,71 @@ import {
 } from "../GlobalStyles/LayoutStyles";
 import Sidebar from "../components/sidebar/Sidebar";
 import NavBar from "../components/nav/nav";
-
-const user = {
-  avatar: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
-  name: "홍길동",
-  email: "honggildong@example.com",
-  phone: "010-1234-5678",
-};
-
-const ordersData = {
-  recent_orders: [
-    {
-      order_date: "2023-02-23",
-      order_id: "11415",
-      status: "주문 완료",
-      name: "홍길동",
-      product: {
-        productId: "201",
-        name: "길동 티셔츠",
-        description: "Comfortable cotton t-shirt",
-        category: "Men's Tops",
-        brand: "Brand A",
-        variants: [
-          {
-            variantId: "2011",
-            color: "Red",
-            size: "M",
-            price: 20000,
-            stock: 5,
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-            ],
-          },
-        ],
-      },
-    },
-    {
-      order_date: "2023-02-21",
-      order_id: "11416",
-      status: "주문 완료",
-      name: "홍길동",
-      product: {
-        productId: "202",
-        name: "길동 바지",
-        description: "Comfortable cotton pants",
-        category: "Men's Bottoms",
-        brand: "Brand B",
-        variants: [
-          {
-            variantId: "2021",
-            color: "Blue",
-            size: "L",
-            price: 30000,
-            stock: 2,
-            images: [
-              "https://via.placeholder.com/150",
-              "https://via.placeholder.com/150",
-            ],
-          },
-        ],
-      },
-    },
-  ],
-};
+import useFetchData from "../hook/useFetchData";
+import API_PATHS from "../utils/apiPaths";
 
 const OrdersPage = () => {
-  const [orders, setOrders] = useState(ordersData.recent_orders);
+  const { data: priceData, loading, error } = useFetchData(API_PATHS.PRODUCTS); 
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    try {
+      const storedOrders = JSON.parse(localStorage.getItem('cart'));
+      if (storedOrders && priceData) {
+        const formattedOrders = storedOrders.map((order, index) => {
+          const orderItems = Object.entries(order.sizes).map(([size, quantity]) => {
+            const product = priceData.find(p => p._id === order.productId);
+            const productPrice = product?.price || 0;
+            const totalPrice = productPrice * quantity;
+            return {
+              color: order.color,
+              size,
+              price: productPrice,
+              totalPrice,
+              stock: quantity,
+              images: [
+                "https://via.placeholder.com/150",
+              ],
+            };
+          });
+
+          return {
+            order_date: new Date().toISOString().split('T')[0],
+            order_id: (10000 + index).toString(),
+            status: "주문 완료",
+            product: {
+              productId: order.productId,
+              name: order.name,
+              orderItems,
+            },
+          };
+        });
+        setOrders(formattedOrders);
+      } else if (!storedOrders) {
+        throw new Error("No orders data found in local storage");
+      }
+    } catch (err) {
+      console.error("Error loading orders data:", err);
+    }
+  }, [priceData]); 
 
   const handleDelete = (orderId) => {
-    setOrders(orders.filter((order) => order.order_id !== orderId));
+    const updatedOrders = orders.filter((order) => order.order_id !== orderId);
+    setOrders(updatedOrders);
+    const storedOrders = JSON.parse(localStorage.getItem('cart'));
+    const updatedStoredOrders = storedOrders.filter((_, index) => (10000 + index).toString() !== orderId);
+    localStorage.setItem('cart', JSON.stringify(updatedStoredOrders));
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <>
       <NavBar />
       <PageLayout>
         <SidebarLayout>
-          <Sidebar user={user} />
+          <Sidebar />
         </SidebarLayout>
         <ContentLayout>
           <div style={{ marginTop: "4rem" }}>

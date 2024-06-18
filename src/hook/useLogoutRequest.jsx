@@ -1,32 +1,33 @@
 import { useState } from "react";
+import API_PATHS from "../utils/apiPaths";
 
-const usePostRequest = (url) => {
+const useLogoutRequest = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const postData = async (body) => {
+  const logout = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const LoginAndRegister = {
+      const options = {
         method: "POST",
         credentials: 'include',
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
         },
-        body: JSON.stringify(body),
+        body: 'logout',
       };
 
-      const response = await fetch(url, LoginAndRegister);
+      const response = await fetch(API_PATHS.LOGOUT, options);
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || response.statusText);
+        const errorData = await response.text();
+        throw new Error(errorData || response.statusText);
       }
 
-      const data = await response.json();
+      const data = await response.text();
       setData(data);
       return data;
     } catch (err) {
@@ -37,7 +38,7 @@ const usePostRequest = (url) => {
     }
   };
 
-  return { data, loading, error, postData };
+  return { data, loading, error, logout };
 };
 
-export default usePostRequest;
+export default useLogoutRequest;
