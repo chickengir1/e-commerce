@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const PageContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
   background: #f4f6f9;
@@ -14,18 +15,19 @@ export const PageContainer = styled.div`
 export const OrderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 1 1 calc(50% - 32px);
   border: 1px solid #dae1f4;
   border-radius: 8px;
   padding: 16px;
   background: #fff;
   box-sizing: border-box;
+  margin-bottom: 16px;
 `;
 
 export const OrderContent = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const OrderLeftSection = styled.div`

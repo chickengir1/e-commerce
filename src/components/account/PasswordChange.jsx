@@ -9,11 +9,7 @@ import {
   InputSection,
   InstructionsSection,
 } from "./styles/commonStyles";
-import {
-  Input,
-  ReadOnlyInput,
-  Button,
-} from "./styles/PasswordChangeStyles";
+import { Input, ReadOnlyInput, Button } from "./styles/PasswordChangeStyles";
 import Notification from "../notification/Notification";
 import usePasswordChange from "../../hook/usePasswordChange";
 import API_PATHS from "../../utils/apiPaths";
@@ -26,7 +22,7 @@ const PasswordChange = ({ user }) => {
     setNewPassword,
     setConfirmPassword,
     handleSubmit,
-  } = usePasswordChange(API_PATHS.USER); 
+  } = usePasswordChange(API_PATHS.USER);
 
   return (
     <Container>
@@ -35,7 +31,9 @@ const PasswordChange = ({ user }) => {
         <FlexContainer>
           <InputSection>
             <InputGroup>
-              <ReadOnlyInput>보안을 위해 주기적으로 비밀번호를 변경해주세요.</ReadOnlyInput>
+              <ReadOnlyInput>
+                보안을 위해 주기적으로 비밀번호를 변경해주세요.
+              </ReadOnlyInput>
             </InputGroup>
             <form onSubmit={handleSubmit}>
               <InputGroup>
@@ -56,9 +54,6 @@ const PasswordChange = ({ user }) => {
                 />
               </InputGroup>
               {notification && <Notification message={notification} />}
-              <InputGroup>
-                <Button type="submit">비밀번호 변경</Button>
-              </InputGroup>
             </form>
           </InputSection>
           <InstructionsSection>
@@ -74,6 +69,7 @@ const PasswordChange = ({ user }) => {
             </span>
           </InstructionsSection>
         </FlexContainer>
+        <Button style={{ height: "3rem", marginTop: "8px" }} type="submit">비밀번호 변경</Button>
       </Section>
     </Container>
   );

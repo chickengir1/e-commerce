@@ -29,6 +29,7 @@ export const Button = styled.button`
 export const DelBtn = styled.button`
   width: 8rem;
   height: 3rem;
+  margin-top: -2rem;
   font-size: 16px;
   padding: 10px;
   border: none;

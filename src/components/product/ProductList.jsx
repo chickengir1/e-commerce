@@ -2,7 +2,6 @@ import React from 'react';
 import { Flex, Items } from './styles/LayoutStyles';
 import ProductCard from './ProductCard';
 
-
 const addPlaceholders = (products, itemsPerRow) => {
   const placeholdersNeeded = itemsPerRow - (products.length % itemsPerRow);
   if (placeholdersNeeded < itemsPerRow) {

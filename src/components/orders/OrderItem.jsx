@@ -51,41 +51,55 @@ const OrderItem = ({ order, onDelete }) => {
     <OrderContainer>
       <OrderContent>
         <OrderLeftSection>
-          <OrderDate>{order_date}</OrderDate>
-          <OrderStatus>{status}</OrderStatus>
-            {orderItems.map((item, index) => (
-              <ProductDetails key={index} >
-                <ProductImage src={item.images[0]} alt={productName} />
-                <div>
+          <OrderInfo order_date={order_date} status={status} />
+          {orderItems.map((item, index) => (
+            <ProductDetails key={index}>
+              <ProductImage src={item.images[0]} alt={productName} />
+              <div>
                 <OrderProduct>{`${productName} - ${item.color} / ${item.size}`}</OrderProduct>
                 <OrderPrice>{`총 금액 : ${(item.totalPrice).toLocaleString("ko-KR")} 원`}</OrderPrice>
                 <OrderPrice>{`${item.stock} X ${(item.price).toLocaleString("ko-KR")} 원`}</OrderPrice>
-                </div>
-              </ProductDetails>
-            ))}
+              </div>
+            </ProductDetails>
+          ))}
         </OrderLeftSection>
         <OrderRightSection>
           <OrderActions>
             <OrderPrice>{`ID - #${order_id}`}</OrderPrice>
-            <div style={{ display: "flex", gap: "5px" }}>
-              <OrderActionsButton onClick={() => onDelete(order_id)}>주문 취소</OrderActionsButton>
-              <OrderActionsButton onClick={openModal}>주문 수정</OrderActionsButton>
-            </div>
+            <OrderButtons onDelete={onDelete} openModal={openModal} order_id={order_id} />
           </OrderActions>
         </OrderRightSection>
       </OrderContent>
 
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Order Edit Modal"
-        ariaHideApp={false}
-        style={customStyles}
-      >
-        <OrderEdit order={order} closeModal={closeModal} />
-      </Modal>
+      <OrderEditModal isOpen={isModalOpen} closeModal={closeModal} order={order} />
     </OrderContainer>
   );
 };
+
+const OrderInfo = ({ order_date, status }) => (
+  <>
+    <OrderDate>{order_date}</OrderDate>
+    <OrderStatus>{status}</OrderStatus>
+  </>
+);
+
+const OrderButtons = ({ onDelete, openModal, order_id }) => (
+  <div style={{ display: "flex", gap: "5px" }}>
+    <OrderActionsButton onClick={() => onDelete(order_id)}>주문 취소</OrderActionsButton>
+    <OrderActionsButton onClick={openModal}>주문 수정</OrderActionsButton>
+  </div>
+);
+
+const OrderEditModal = ({ isOpen, closeModal, order }) => (
+  <Modal
+    isOpen={isOpen}
+    onRequestClose={closeModal}
+    contentLabel="Order Edit Modal"
+    ariaHideApp={false}
+    style={customStyles}
+  >
+    <OrderEdit order={order} closeModal={closeModal} />
+  </Modal>
+);
 
 export default OrderItem;

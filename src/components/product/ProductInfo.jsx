@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from './Image';
-import Text from './Text';
+import { Image, Text } from './Media';
 import { Card, TextContainer, LineContainer } from './styles/LayoutStyles';
 import { Line } from '../../GlobalStyles/LayoutStyles';
 
