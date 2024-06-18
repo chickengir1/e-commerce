@@ -16,7 +16,7 @@ export const ItemContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 `;
 
 export const BrandContainer = styled.div`
@@ -100,6 +100,7 @@ export const ThemaContainer = styled.div`
   margin: 0 auto;
   justify-content: center;
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 export const CategoryTitle = styled.h2`
@@ -126,5 +127,5 @@ export const CategoryTitle = styled.h2`
 `;
 
 export const Container = styled.div`
-  margin: 70px 0;
+  margin-bottom: 150px;
 `;

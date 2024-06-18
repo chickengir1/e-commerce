@@ -89,7 +89,7 @@ export const StyledButton = styled.button`
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   font-size: 15px;
   text-align: center;
-  background-color: #e6e6e6;
+  background-color: #DDE1ED;
   border-radius: 5px;
   cursor: pointer;
   color: #0c0e46;
