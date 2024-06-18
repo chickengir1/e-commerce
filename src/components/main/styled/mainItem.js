@@ -48,7 +48,7 @@ export const ProductBox = styled.div`
   flex-direction: column;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 1px 1px 8px #aaa;
+  box-shadow: 1px 1px 6px #8690AE;
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease;
@@ -60,7 +60,7 @@ export const ProductBox = styled.div`
 export const ProductImage = styled.img`
   width: 100%;
   height: 150px;
-  border-bottom: 3px solid #ddd;
+  border: 1px solid #ddd;
   border-radius: 10px;
   object-fit: cover;
   margin-bottom: 5px;
@@ -70,9 +70,8 @@ export const ProductName = styled.p`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 4px;
-  border-bottom: 3px solid #ddd;
-  border-left: 3px solid #ddd;
-  border-right: 3px solid #ddd;
+  border-bottom: 1px solid #EEF2FF;
+  padding: 2px;
 `;
 
 export const ProductNameSmall = styled(ProductName)`
@@ -129,7 +128,7 @@ export const StyledButton = styled.button`
     content: "";
     left: 0;
     top: 0;
-    background: #000;
+    background: #212E57;
     transition: all 0.3s ease;
   }
 
@@ -157,7 +156,7 @@ export const StyledButton = styled.button`
     content: "";
     right: 0;
     bottom: 0;
-    background: #000;
+    background: #212E57;
     transition: all 0.3s ease;
   }
 
@@ -181,7 +180,7 @@ export const StyledButton = styled.button`
 
   &.selected span {
     transform: scale(1.1);
-    background: #e0ecf8;
+    background: #D1DCFD;
   }
 
   &:hover {
