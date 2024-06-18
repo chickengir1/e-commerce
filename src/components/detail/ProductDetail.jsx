@@ -65,28 +65,9 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
   };
 
   const handleCheckout = () => {
-    if (!selectedColor || !selectedSize) {
-      setNotification('‼️색상과 사이즈를 선택해주세요‼️');
-      setTimeout(() => {
-        setNotification(null);
-      }, 2000);
-      return;
+    if (addToCart()) {
+      navigate(`/checkouts`);
     }
-
-    const totalPrice = product.price * quantity;
-
-    const productDetails = {
-      name: product.name,
-      productId: product._id,
-      color: selectedColor,
-      size: selectedSize,
-      quantity: quantity,
-      price: product.price,
-      totalPrice: totalPrice
-    };
-
-    localStorage.setItem('product', JSON.stringify(productDetails));
-    navigate(`/checkouts`);
   };
 
   if (!product) {
