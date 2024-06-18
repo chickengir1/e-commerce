@@ -1,5 +1,5 @@
 import React from 'react';
-import { Title, Row, BoldRow } from './styles';
+import { Title, Row } from './styles';
 
 const OrderConfirmation = ({ total, items }) => {
   return (
@@ -11,10 +11,6 @@ const OrderConfirmation = ({ total, items }) => {
           <span>{(item.price * item.quantity).toLocaleString('ko-KR')} 원</span>
         </Row>
       ))}
-      <BoldRow>
-        <span>총 금액 :</span>
-        <span>{total.toLocaleString('ko-KR')} 원</span>
-      </BoldRow>
     </>
   );
 };
