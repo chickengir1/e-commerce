@@ -9,14 +9,14 @@ export const CategoryContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
-  margin-bottom: 100px;
+  margin-bottom: 120px;
 `;
 
 export const ItemContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  margin-bottom: 100px;
+  margin-bottom: 150px;
 `;
 
 export const BrandContainer = styled.div`
@@ -100,6 +100,7 @@ export const ThemaContainer = styled.div`
   margin: 0 auto;
   justify-content: center;
   width: 100%;
+  margin-bottom: 100px;
 `;
 
 export const CategoryTitle = styled.h2`
@@ -108,11 +109,11 @@ export const CategoryTitle = styled.h2`
   font-weight: normal;
   width: 1220px;
   margin-right: 40px;
-  letter-spacing: 50px;
-  font-style: italic;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 25px;
+  color: #36436F;
+  text-shadow: 2px 2px 4px rgba(87,99,138, 0.5);
   padding-bottom: 20px;
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
 
   &::after {
     content: "";
@@ -121,10 +122,10 @@ export const CategoryTitle = styled.h2`
     left: 0;
     width: calc(100% + 50px);
     height: 3px;
-    background: linear-gradient(to right, #4169e1, #feb47b);
+    background: linear-gradient(to right, #D1DCFD, #7485BC);
   }
 `;
 
 export const Container = styled.div`
-  margin: 70px 0;
+  margin-bottom: 150px;
 `;
