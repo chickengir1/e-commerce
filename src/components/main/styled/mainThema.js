@@ -1,38 +1,60 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 1280px;
-  margin: 0 auto;
-  justify-content: center;
+export const slide = (itemCount) => keyframes`
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-${itemCount * 16}%); }
 `;
 
-const Item = styled.div`
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin: 10px 20px;
-  transition: transform 0.3s ease;
+export const Container = styled.div`
+  width: 85%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 5rem;
+`;
+
+export const SliderWrapper = styled.div`
+  display: flex;
+  animation: ${({ $itemCount }) => slide($itemCount)} 50s linear infinite;
 
   &:hover {
-    transform: scale(1.05);
+    animation-play-state: paused;
   }
 `;
 
-const Img = styled.img`
-  width: 180px;
-  height: 200px;
-  object-fit: cover;
+export const Item = styled.div`
+  flex: 0 0 20%;
+  height: 21rem;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
 `;
 
-const Name = styled.p`
+export const Img = styled.img`
+  width: 100%;
+  height: 15rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 5px;
+`;
+
+export const Name = styled.p`
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 10px;
 `;
 
-const Category = styled.p`
+export const Price = styled.p`
   font-size: 14px;
   color: #666;
+  margin-bottom: 5px;
 `;
-
-export { Container, Item, Img, Name, Category }

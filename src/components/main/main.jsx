@@ -2,18 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Category from './Category';
 import Sliders from './mainSlider';
-import Brand from './Brand';
 import Puzzle from './mainPuzzle';
 import ItemList from './ItemList';
 import ThemaItem from './ThemaItem';
-import { Line } from '../../GlobalStyles/LayoutStyles';
 import logo from '../../../public/assets/logo.png';
 import {
   SlidersContainer,
   CategoryContainer,
   ItemContainer,
-  BrandContainer,
-  LineContainer,
   StyledH2,
   AdStyled,
   AdContainer,
@@ -50,25 +46,16 @@ const Mainpage = () => {
         <ItemContainer>
           <ItemList />
         </ItemContainer>
-      </div>
+      </div>  
       <Container>
         <Puzzle />
       </Container>
-      {/*
-      <LineContainer>
-        <Line />
-      </LineContainer>
-      */}
-      <StyledH2>모아둔 이유</StyledH2>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+      <CategoryTitle>엘리스 스토어</CategoryTitle>
       <ThemaContainer>
         <ThemaItem />
-        <br />
-        <ThemaItem />
       </ThemaContainer>
-      <StyledH2>브랜드 갤러리</StyledH2>
-      <BrandContainer>
-        <Brand />
-      </BrandContainer>
+      </div>  
     </>
   );
 };

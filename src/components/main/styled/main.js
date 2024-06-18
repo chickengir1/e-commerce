@@ -96,7 +96,10 @@ export const AdStyled = styled.img`
 `;
 
 export const ThemaContainer = styled.div`
-  margin-bottom: 100px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+  width: 100%;
 `;
 
 export const CategoryTitle = styled.h2`
@@ -124,4 +127,4 @@ export const CategoryTitle = styled.h2`
 
 export const Container = styled.div`
   margin: 70px 0;
-`
+`;
