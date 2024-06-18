@@ -17,7 +17,8 @@ const FilterContainer = styled.div`
 const Buttons = styled.div`
   background-color: white;
   color: black;
-  border-bottom: 1px solid #aaa;
+  box-shadow: 0px 1px 2px rgba(134,144,174, 0.4);
+  border-bottom: 1px solid #6676A4;
   padding: 10px 24px;
   text-align: center;
   text-decoration: none;
@@ -29,7 +30,7 @@ const Buttons = styled.div`
   transition-duration: 0.4s;
 
   &:hover {
-    background-color: #81daf5;
+    background-color: #BDC9F2;
     color: white;
   }
 `;

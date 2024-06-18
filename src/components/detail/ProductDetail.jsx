@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, ImageContainer, InfoContainer, ProductImage, ProductTitle, ProductPrice } from './styles/ProductDetailStyles';
 import SizeSelector from './SizeSelector';
 import ColorSelector from './ColorSelector';
@@ -9,6 +10,8 @@ import { CheckoutButton, WishlistButton } from "./styles/AddToWishlistButtonStyl
 import Notification from '../notification/Notification';
 
 const ProductDetail = ({ product, relatedProducts = [] }) => {
+  const navigate = useNavigate();
+
   const placeholderImage = 'https://via.placeholder.com/150';
   const productImage = product?.images?.length > 0 ? product.images[0] : placeholderImage;
 
@@ -56,6 +59,31 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
     }, 1000);
   };
 
+  const handleCheckout = () => {
+    if (!selectedColor || !selectedSize) {
+      setNotification('‼️색상과 사이즈를 선택해주세요‼️');
+      setTimeout(() => {
+        setNotification(null);
+      }, 2000);
+      return;
+    }
+
+    const totalPrice = product.price * quantity;
+
+    const productDetails = {
+      name: product.name,
+      productId: product._id,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: quantity,
+      price: product.price,
+      totalPrice: totalPrice
+    };
+
+    localStorage.setItem('product', JSON.stringify(productDetails));
+    navigate(`/checkouts`);
+  };
+
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -75,7 +103,7 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
         <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
         <div style={{ display: "flex", gap: "15px" }}>
           <WishlistButton onClick={handleAddToWishlist}>장바구니에 추가</WishlistButton>
-          <CheckoutButton>결제하기</CheckoutButton>
+          <CheckoutButton onClick={handleCheckout}>결제하기</CheckoutButton>
         </div>
       </InfoContainer>
       <div style={{ width: "100%" }}>

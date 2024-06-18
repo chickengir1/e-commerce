@@ -3,6 +3,10 @@ import { CartListContainer, CartListHeader, CartListTitle, CartCheck } from './S
 import { StyledButton } from './Styles/ButtonStyles';
 import CartItem from './CartItem';
 
+const isEmpty = (arr) => {
+  return !arr || arr.length === 0;
+};
+
 const CartList = ({ items, onDelete, onDeleteAll }) => {
   return (
     <CartListContainer>
@@ -13,7 +17,7 @@ const CartList = ({ items, onDelete, onDeleteAll }) => {
           <StyledButton onClick={onDeleteAll}>전체 삭제</StyledButton>
         </CartCheck>
       </CartListHeader>
-      {items.length === 0 ? (
+      {isEmpty(items) ? (
         <p style={{ fontSize: "20px", textAlign: "center" }}>장바구니가 비어있습니다.</p>
       ) : (
         items.map((item) => (
