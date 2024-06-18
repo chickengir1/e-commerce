@@ -77,7 +77,8 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
       size: selectedSize,
       quantity: quantity,
       price: product.price,
-      totalPrice: totalPrice
+      totalPrice: totalPrice,
+      imageUrl: productImage
     };
 
     localStorage.setItem('product', JSON.stringify(productDetails));
