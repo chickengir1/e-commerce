@@ -20,13 +20,13 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
   const [quantity, setQuantity] = useState(1);
   const [notification, setNotification] = useState(null);
 
-  const handleAddToWishlist = () => {
+  const addToCart = () => {
     if (!selectedColor || !selectedSize) {
       setNotification('‼️색상과 사이즈를 선택해주세요‼️');
       setTimeout(() => {
         setNotification(null);
       }, 2000);
-      return;
+      return false;
     }
 
     const productId = product._id;
@@ -51,37 +51,23 @@ const ProductDetail = ({ product, relatedProducts = [] }) => {
       : [...cart, cartItem];
 
     localStorage.setItem('cart', JSON.stringify(updatedCart));
-    setNotification('장바구니에 추가되었습니다.');
+    return true;
+  };
 
-    setTimeout(() => {
-      setNotification(null);
-      window.location.reload();
-    }, 1000);
+  const handleAddToWishlist = () => {
+    if (addToCart()) {
+      setNotification('장바구니에 추가되었습니다.');
+      setTimeout(() => {
+        setNotification(null);
+        window.location.reload();
+      }, 1000);
+    }
   };
 
   const handleCheckout = () => {
-    if (!selectedColor || !selectedSize) {
-      setNotification('‼️색상과 사이즈를 선택해주세요‼️');
-      setTimeout(() => {
-        setNotification(null);
-      }, 2000);
-      return;
+    if (addToCart()) {
+      navigate(`/checkouts`);
     }
-
-    const totalPrice = product.price * quantity;
-
-    const productDetails = {
-      name: product.name,
-      productId: product._id,
-      color: selectedColor,
-      size: selectedSize,
-      quantity: quantity,
-      price: product.price,
-      totalPrice: totalPrice
-    };
-
-    localStorage.setItem('product', JSON.stringify(productDetails));
-    navigate(`/checkouts`);
   };
 
   if (!product) {
