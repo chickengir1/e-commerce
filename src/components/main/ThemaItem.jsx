@@ -11,7 +11,7 @@ const ThemaItem = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading data</p>;
 
-  const items = data ? [...data, ...data] : [];
+  const items = data ? [...data] : [];
 
   const handleClick = (id) => {
     navigate(`/product/${id}`);
@@ -19,14 +19,12 @@ const ThemaItem = () => {
 
   return (
     <Container>
-      <SliderWrapper>
+      <SliderWrapper $itemCount={items.length}>
         {items.map((item, index) => (
-          <Item key={`${item._id ?? index}-${index}`} onClick={() => handleClick(item._id)}>
+          <Item key={item._id ?? index} onClick={() => handleClick(item._id)}>
+            <Price>{index + 1}</Price>
             <Img
-              src={
-                item.images[0] ??
-                `https://via.placeholder.com/150?text=No+Image`
-              }
+              src={item.images[0] ?? `https://via.placeholder.com/150?text=No+Image`}
               alt={item.name ?? `Item ${index + 1}`}
             />
             <Name>{item.name ?? `Name ${index + 1}`}</Name>
