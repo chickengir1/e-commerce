@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Category from './Category';
 import Sliders from './mainSlider';
 import Brand from './Brand';
-import Puzzle1 from './puzzle1';
-import Puzzle2 from './puzzle2';
+import Puzzle from './mainPuzzle';
 import ItemList from './ItemList';
 import ThemaItem from './ThemaItem';
 import { Line } from '../../GlobalStyles/LayoutStyles';
@@ -38,14 +37,14 @@ const Mainpage = () => {
         <Sliders />
       </SlidersContainer>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <AdContainer>
-          <AdStyled src={logo} onClick={handleClick} />
-        </AdContainer>
         <CategoryTitle>CATEGORY</CategoryTitle>
       </div>
       <CategoryContainer>
         <Category />
       </CategoryContainer>
+      <AdContainer>
+        <AdStyled src={logo} onClick={handleClick} />
+      </AdContainer>
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <CategoryTitle>여름의 신선함을 만나보세요</CategoryTitle>
         <ItemContainer>
@@ -53,29 +52,23 @@ const Mainpage = () => {
         </ItemContainer>
       </div>
       <Container>
-        <Puzzle1 />
+        <Puzzle />
       </Container>
       {/*
       <LineContainer>
         <Line />
       </LineContainer>
-      
+      */}
       <StyledH2>모아둔 이유</StyledH2>
       <ThemaContainer>
         <ThemaItem />
         <br />
         <ThemaItem />
       </ThemaContainer>
-      */}
-      <Container>
-        <Puzzle2 />
-      </Container>
-      {/*
       <StyledH2>브랜드 갤러리</StyledH2>
       <BrandContainer>
         <Brand />
       </BrandContainer>
-      */}
     </>
   );
 };
