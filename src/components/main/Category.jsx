@@ -25,6 +25,10 @@ function Category() {
     "/assets/men-pants.webp",
     "/assets/women-top.webp",
     "/assets/women-pants.webp",
+    "/assets/outer.webp",
+    "/assets/bag.webp",
+    "/assets/hat.webp",
+    "/assets/shoes.webp",
   ];
 
   const ImageBtn = ({ imgSrc, category }) => {
@@ -43,7 +47,7 @@ function Category() {
     return (
       <ImgBtn onClick={handleClick}>
         <img src={imgSrc} alt={category.name} />
-        <button style={{ fontSize: "24px", fontWeight: "bold" }}>{category.name}</button>
+        <button style={{ fontSize: "18px", fontWeight: "bold" }}>{category.name}</button>
       </ImgBtn>
     );
   };

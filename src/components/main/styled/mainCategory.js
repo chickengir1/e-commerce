@@ -12,37 +12,36 @@ export const ImgBtn = styled.div`
 
   &:hover {
     img {
-      text-shadow: 2px 2px 0 #000, 3px 3px 0 #333;
+      transform: scale(1.1);
+      text-shadow: 2px 2px 0 #000, 3px 3px 0 #8690AE;
     }
     button {
-      color: #fff;
-      text-shadow: 2px 2px 0 #000, 3px 3px 0 #333;
+      color: #EEF2FF;
+      text-shadow: 2px 2px 0 #333, 3px 3px 0 #36436F;
       transform: scale(1.01);
     }
   }
 
   img {
-    width: 250px;
-    height: 200px;
-    border-radius: 50px 50px 0 50px;
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
     padding: 10px;
-    background: linear-gradient(300deg, #d1e8ff, transparent 50%);
-    transition: width 0.2s ease-in-out, height 0.3s ease;
+    box-shadow: 0px 2px 6px rgba(134,144,174, 0.4);
+    transition: transform 0.2s ease-in-out, width 0.2s ease-in-out, height 0.3s ease;
     position: absolute;
   }
 
   button {
-    margin-top: 250px;
-    letter-spacing: 4px;
-    font-style: italic;
+    margin-top: 100px;
+    letter-spacing: 1px;
     padding: 15px;
     border-radius: 5px;
     border: none;
-    width: 250px;
+    width: 140px;
     cursor: pointer;
     background: none;
     color: #333;
-    font-size: 20px;
     transition: color 0.1s ease-in-out, text-shadow 0.1s ease-in-out,
       transform 0.1s ease-in-out;
   }
