@@ -10,6 +10,7 @@ const API_PATHS = {
   LOGOUT: `${API_BASE_URL}/login/logout`,
   USER: `${API_BASE_URL}/users/user/me`,
   INFO: `${API_BASE_URL}/users/me`, 
+  ORDER: `${API_BASE_URL}/orders/`,
 };
 
 export default API_PATHS;

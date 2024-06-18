@@ -70,7 +70,6 @@ const OrderItem = ({ order, onDelete }) => {
           </OrderActions>
         </OrderRightSection>
       </OrderContent>
-
       <OrderEditModal isOpen={isModalOpen} closeModal={closeModal} order={order} />
     </OrderContainer>
   );

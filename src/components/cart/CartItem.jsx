@@ -32,11 +32,12 @@ const CartItem = ({ product, stock, selectedColor, selectedSize, onDelete }) => 
   const totalStock = Object.values(editedSize).reduce((acc, qty) => acc + qty, 0);
   const totalPrice = (price * totalStock).toLocaleString('ko-KR');
   const unitPrice = price.toLocaleString('ko-KR');
+  const placeholderImage = 'https://via.placeholder.com/150?text=No+Image';
 
   return (
     <CartItemContainer>
       <CartItemImageContainer>
-        <Image src={image} alt={name} />
+      <Image src={image || placeholderImage} alt={name || 'No Image Available'} />
       </CartItemImageContainer>
       <CartItemInfo>
         <Label size="18px" style={{ fontWeight: 'bold' }}>{name}</Label>

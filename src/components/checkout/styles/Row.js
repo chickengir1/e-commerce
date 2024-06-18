@@ -7,11 +7,11 @@ const Row = styled.div`
   font-size: 16px;
   border-bottom: 1px solid #ddd;
 `;
-const AdressForm = styled.div`
+const AddressForm = styled.div`
   display: flex;
   border-bottom: 1px solid #ddd;
   padding: 8px 0;
   font-size: 16px;
 `;
 
-export { AdressForm, Row };
+export { AddressForm, Row };

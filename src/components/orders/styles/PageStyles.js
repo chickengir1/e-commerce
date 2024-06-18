@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const PageContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
   padding: 16px;
@@ -14,14 +15,12 @@ export const PageContainer = styled.div`
 
 export const OrderContainer = styled.div`
   display: flex;
-  flex-direction: column;
   flex: 1 1 calc(50% - 32px);
+  flex-direction: column;
   border: 1px solid #dae1f4;
   border-radius: 8px;
   padding: 16px;
   background: #fff;
-  box-sizing: border-box;
-  margin-bottom: 16px;
 `;
 
 export const OrderContent = styled.div`
