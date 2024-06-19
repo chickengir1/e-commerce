@@ -48,7 +48,7 @@ export const ProductBox = styled.div`
   flex-direction: column;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 1px 1px 6px #8690AE;
+  box-shadow: 1px 1px 6px #8690ae;
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease;
@@ -68,10 +68,14 @@ export const ProductImage = styled.img`
 
 export const ProductName = styled.p`
   font-size: 18px;
+  width: 100%;
   font-weight: bold;
   margin-bottom: 4px;
-  border-bottom: 1px solid #EEF2FF;
+  border-bottom: 1px solid #eef2ff;
   padding: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const ProductNameSmall = styled(ProductName)`
@@ -89,7 +93,7 @@ export const StyledButton = styled.button`
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   font-size: 15px;
   text-align: center;
-  background-color: #DDE1ED;
+  background-color: #dde1ed;
   border-radius: 5px;
   cursor: pointer;
   color: #0c0e46;
@@ -128,7 +132,7 @@ export const StyledButton = styled.button`
     content: "";
     left: 0;
     top: 0;
-    background: #212E57;
+    background: #212e57;
     transition: all 0.3s ease;
   }
 
@@ -156,7 +160,7 @@ export const StyledButton = styled.button`
     content: "";
     right: 0;
     bottom: 0;
-    background: #212E57;
+    background: #212e57;
     transition: all 0.3s ease;
   }
 
@@ -180,7 +184,7 @@ export const StyledButton = styled.button`
 
   &.selected span {
     transform: scale(1.1);
-    background: #D1DCFD;
+    background: #d1dcfd;
   }
 
   &:hover {

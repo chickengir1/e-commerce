@@ -5,8 +5,8 @@ import { Title, LineContainer, Line } from "./styles/LoginStyles";
 import Input from "./Input";
 import LoginButton from "./LoginButton";
 import Oauth from "./Oauth";
-import API_PATHS from '../../utils/apiPaths';
-import useAuthStatus from '../../hook/useAuthStatus';
+import API_PATHS from "../../utils/apiPaths";
+import useAuthStatus from "../../hook/useAuthStatus";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +22,7 @@ const Login = () => {
 
   useEffect(() => {
     if (data) {
-      sessionStorage.setItem('session', data.token);
+      sessionStorage.setItem("session", true);
       setIsLoggedIn(true);
       navigate("/");
     }
@@ -31,14 +31,14 @@ const Login = () => {
   return (
     <>
       <Title id="title">LOGIN</Title>
-      <LoginForm 
-        email={email} 
-        setEmail={setEmail} 
-        password={password} 
-        setPassword={setPassword} 
-        handleLogin={handleLogin} 
-        loading={loading} 
-        error={error} 
+      <LoginForm
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        handleLogin={handleLogin}
+        loading={loading}
+        error={error}
       />
       <LineContainer style={{ margin: "1.5rem" }}>
         <Line />
@@ -50,7 +50,15 @@ const Login = () => {
   );
 };
 
-const LoginForm = ({ email, setEmail, password, setPassword, handleLogin, loading, error }) => (
+const LoginForm = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  handleLogin,
+  loading,
+  error,
+}) => (
   <form onSubmit={handleLogin}>
     <div className="login-box">
       <Input

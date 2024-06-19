@@ -18,4 +18,7 @@ export const StyledText = styled.p`
   line-height: ${({ type }) => (type === "h2" ? "1.2rem" : "1rem")};
   display: block;
   color: ${({ type }) => (type === "description" ? "gray" : "black")};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Title,
@@ -27,6 +27,7 @@ export default function Component() {
     error,
     setData: setOrders,
   } = useFetchData("/api/orders");
+  const [orderName, setOrderName] = useState([]);
 
   const handleStatusChange = (orderId, newStatus) => {
     setOrders((prevOrders) =>
@@ -35,6 +36,20 @@ export default function Component() {
       )
     );
   };
+
+  useEffect(() => {
+    if (orders) {
+      const productName = orders.flatMap((order) =>
+        order.items.map((item) => {
+          if (!item || !item.item || !item.item.productId) {
+            return `Product ${item._id}`;
+          }
+          return item.item.productId.name;
+        })
+      );
+      setOrderName(productName);
+    }
+  }, [orders]);
 
   const handleDelete = (orderId) => {
     setOrders((prevOrders) =>
@@ -55,8 +70,7 @@ export default function Component() {
               <Th>#</Th>
               <DateTh>주문 날짜</DateTh>
               <UserTh>주문자 정보</UserTh>
-              <ProductTh>제품 번호</ProductTh>
-              <OrderTh>주문 내역</OrderTh>
+              <ProductTh>제품 이름</ProductTh>
               <Th>배송 상태</Th>
               <Th>주문 내역 삭제</Th>
             </Tr>
@@ -67,29 +81,10 @@ export default function Component() {
                 <Tr key={order._id}>
                   <NumTd>{`${index + 1}`}</NumTd>
                   <Td>
-                    {new Date(
-                      order.orderDate.$date || order.orderDate
-                    ).toLocaleString()}
+                    {new Date(order.orderDate).toISOString().split("T")[0]}
                   </Td>
-                  <Td>
-                    {order.name}
-                    <br />
-                    {order.phone}
-                  </Td>
-                  <Td>{order._id}</Td>
-                  <Td>
-                    {order.items.map((item, index) => (
-                      <div key={index}>
-                        {item.item && item.item.$oid ? (
-                          <>
-                            {item.item.$oid} (Size: {item.size}) x {item.quantity}
-                          </>
-                        ) : (
-                          <span>정보 없음</span>
-                        )}
-                      </div>
-                    ))}
-                  </Td>
+                  <Td>{order.name}</Td>
+                  <Td>{orderName[index]}</Td>
                   <StatusTd>
                     <Select
                       value={order.orderState}

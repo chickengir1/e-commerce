@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Nike from "../../../public/assets/nike.webp";
 import Adidas from "../../../public/assets/adidas.webp";
 import Puma from "../../../public/assets/puma.webp";
+import Standard from "../../../public/assets/standard.webp";
 import {
   Container,
   ButtonContainer,
@@ -24,6 +25,7 @@ const brandImages = {
   나이키: Nike,
   아디다스: Adidas,
   푸마: Puma,
+  엘리스스탠다드: Standard,
 };
 
 const ItemList = () => {
@@ -52,7 +54,9 @@ const ItemList = () => {
   if (brandError) return <div>Error: {brandError.message}</div>;
   if (productError) return <div>Error: {productError.message}</div>;
 
-  const selectedBrand = brandData.find((brand) => brand.name === selectedBrandName);
+  const selectedBrand = brandData.find(
+    (brand) => brand.name === selectedBrandName
+  );
   const filteredProducts = productData.filter(
     (product) => product.brand && product.brand._id === selectedBrand._id
   );
@@ -79,14 +83,19 @@ const ItemList = () => {
         <ProductContainer>
           <Products>
             {filteredProducts.slice(0, 4).map((product) => (
-              <ProductBox key={product._id} onClick={() => navigate("/products")}>
+              <ProductBox
+                key={product._id}
+                onClick={() => navigate("/products")}
+              >
                 <ProductImage
                   src={product.images?.[0] || "https://via.placeholder.com/150"}
                   alt={product.name}
                 />
                 <ProductName>{product.name}</ProductName>
                 <ProductNameSmall>{product.description}</ProductNameSmall>
-                <ProductNameMedium>{`${product.price.toLocaleString("ko-KR")} 원`}</ProductNameMedium>
+                <ProductNameMedium>{`${product.price.toLocaleString(
+                  "ko-KR"
+                )} 원`}</ProductNameMedium>
               </ProductBox>
             ))}
           </Products>

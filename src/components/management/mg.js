@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  max-width: 1280px;
+  width: 93%;
   margin: 0 auto;
   margin-top: 50px;
   padding: 20px;
@@ -64,6 +64,9 @@ export const OrderTh = styled.th`
 
 export const Tr = styled.tr`
   border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Td = styled.td`

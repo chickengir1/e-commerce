@@ -38,7 +38,7 @@ const CheckoutTemplate = ({ items, total }) => {
       console.log("Response Data:", responseData);
     } catch (error) {
       console.error("Error:", error);
-      setNotificationMessage("주문 처리 중 오류가 발생했습니다.");
+      setNotificationMessage("제품 재고가 부족합니다.");
       setShowNotification(true);
       await delay(2000);
       setShowNotification(false);
