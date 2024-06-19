@@ -34,7 +34,7 @@ const CheckoutTemplate = ({ items, total }) => {
       setShowNotification(true);
       await delay(2000);
       setShowNotification(false);
-      navigate("/");
+      navigate("/products");
       console.log("Response Data:", responseData);
     } catch (error) {
       console.error("Error:", error);
