@@ -1,6 +1,6 @@
-import React from 'react';
-import { Section, Title, AddressForm } from './styles';
-import Input from './Input';
+import React from "react";
+import { Section, Title, AddressForm } from "./styles";
+import Input from "./Input";
 
 const ShippingAddressForm = ({ formData, handleChange }) => (
   <Section>
@@ -19,10 +19,10 @@ const ShippingAddressForm = ({ formData, handleChange }) => (
         <Input
           label="주소"
           type="text"
-          value={formData.address}
+          value={formData.address1}
           onChange={handleChange}
           placeholder="등록 기준지를 적어주세요"
-          name="address"
+          name="address1"
           high
         />
       </AddressForm>
@@ -30,10 +30,10 @@ const ShippingAddressForm = ({ formData, handleChange }) => (
         <Input
           label="상세 주소"
           type="text"
-          value={formData.city}
+          value={formData.address2}
           onChange={handleChange}
           placeholder="구체적인 상세 주소를 적어주세요"
-          name="city"
+          name="address2"
         />
         <Input
           label="우편번호"
