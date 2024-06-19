@@ -110,7 +110,7 @@ export const CategoryTitle = styled.h2`
   width: 1220px;
   margin-right: 40px;
   letter-spacing: 25px;
-  color: #36436F;
+  color: #1D294D;
   text-shadow: 2px 2px 4px rgba(87,99,138, 0.5);
   padding-bottom: 20px;
   margin-bottom: 2.5rem;
