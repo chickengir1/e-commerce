@@ -80,7 +80,13 @@ export default function Component() {
                   <Td>
                     {order.items.map((item, index) => (
                       <div key={index}>
-                        {item.item.$oid} (Size: {item.size}) x {item.quantity}
+                        {item.item && item.item.$oid ? (
+                          <>
+                            {item.item.$oid} (Size: {item.size}) x {item.quantity}
+                          </>
+                        ) : (
+                          <span>정보 없음</span>
+                        )}
                       </div>
                     ))}
                   </Td>
