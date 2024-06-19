@@ -10,6 +10,7 @@ export const Container = styled.div`
   height: 100%;
   overflow: hidden;
   position: relative;
+  padding-top: 1rem;
   margin-bottom: 5rem;
 `;
 
@@ -30,11 +31,11 @@ export const Item = styled.div`
   margin: 10px;
   border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(134,144,174, 0.1), 0 6px 15px rgba(134,144,174, 0.1);
   transition: transform 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-16px);
   }
 `;
 
