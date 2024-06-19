@@ -29,6 +29,9 @@ export const TableHeaderImg = styled.th`
 export const TableCell = styled.td`
   border: 1px solid #ddd;
   padding: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   text-align: center;
   min-width: 150px;
   max-width: 150px;
