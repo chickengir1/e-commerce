@@ -7,7 +7,7 @@ import {
   OrderPrice,
   OrderActionsButton,
 } from "./styles/OrderItemStyles";
-
+import { ProductImage } from "./styles/PageStyles";
 import {
   OrderContainer,
   OrderContent,
@@ -38,12 +38,22 @@ const customStyles = {
 };
 
 const OrderItem = ({ order, index }) => {
-  const { order_date, status, size } = order;
+  const {
+    order_date,
+    status,
+    size,
+    productName,
+    productImage,
+    productPrice,
+    quantity,
+  } = order;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const totalPrice = productPrice * quantity;
 
   return (
     <OrderContainer>
@@ -51,8 +61,18 @@ const OrderItem = ({ order, index }) => {
         <OrderLeftSection>
           <OrderInfo order_date={order_date} status={status} />
           <ProductDetails>
+            <ProductImage
+              src={productImage}
+              alt={productName}
+              style={{ width: "150px" }}
+            />
             <div>
-              <OrderProduct>{`Size: ${size}`}</OrderProduct>
+              <OrderProduct>{productName}</OrderProduct>
+              <OrderPrice>{`Size: ${size}`}</OrderPrice>
+              <OrderPrice>{`주문 수량 : ${quantity} 개`}</OrderPrice>
+              <OrderProduct>{`총 가격 : ${totalPrice.toLocaleString(
+                "ko-kr"
+              )} 원`}</OrderProduct>
             </div>
           </ProductDetails>
         </OrderLeftSection>

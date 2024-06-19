@@ -22,58 +22,48 @@ const OrdersPage = () => {
     loading: productsLoading,
     error: productsError,
   } = useFetchData(API_PATHS.PRODUCTS);
-  /*const {
-    data: variants,
-    loading: variantsLoading,
-    error: variantsError,
-  } = useFetchData("/api/variant/test");
-*/
-  const [totalOrders, setTotalOrders] = useState([]);
+
+  const [combineOrders, setCombineOrders] = useState([]);
 
   useEffect(() => {
-    if (orders) {
-      const flatOrders = orders.flatMap((order) =>
+    if (orders && products) {
+      const processedOrders = orders.flatMap((order) =>
         order.items.map((item) => ({
           order_date: new Date(order.orderDate).toISOString().split("T")[0],
           status: order.orderState,
           size: item.size,
-          // quantity: item.quantity, 랜더링 시킬 방법이 없음
+          quantity: item.quantity,
+          productId: item.product,
         }))
       );
-      setTotalOrders(flatOrders);
-    }
-  }, [orders]);
 
-  // variants랑 id 검사한 다음 필터링 된 것 orders랑 id 검사해서 item으로 묶으려고 했는데 진짜 너무 어려워서 못함
+      const processedProducts = products.reduce((acc, product) => {
+        acc[product._id] = {
+          name: product.name,
+          price: product.price,
+          image: product.images[0] || "https://via.placeholder.com/150",
+        };
+        return acc;
+      }, {});
 
-  useEffect(() => {
-    if (products) {
-      const simplifiedProducts = products.map((product) => ({
-        id: product._id,
-        name: product.name,
-        price: product.price,
-        image: product.images[0] || "https://via.placeholder.com/150",
+      const combined = processedOrders.map((order, index) => ({
+        ...order,
+        productName:
+          processedProducts[order.productId]?.name || `Product ${index + 1}`,
+        productPrice: processedProducts[order.productId]?.price || 0,
+        productImage:
+          processedProducts[order.productId]?.image ??
+          "https://via.placeholder.com/150",
       }));
-      console.log("Products:", simplifiedProducts);
-    }
-  }, [products]);
 
-  /*useEffect(() => {
-    if (variants) {
-      const simplifiedVariants = variants.map((variant) => ({
-        id: variant._id,
-        productId: variant.productId,
-        color: variant.color,
-      }));
-      console.log("Variants:", simplifiedVariants);
+      setCombineOrders(combined);
     }
-  }, [variants]);
-*/
+  }, [orders, products]);
+
   if (ordersLoading || productsLoading) return <p>Loading...</p>;
   if (ordersError) return <p>Error: {ordersError.message}</p>;
   if (productsError) return <p>Error: {productsError.message}</p>;
-  // if (variantsError) return <p>Error: {variantsError.message}</p>;
-  // 해결 불가능
+
   return (
     <>
       <NavBar />
@@ -84,7 +74,7 @@ const OrdersPage = () => {
         <ContentLayout>
           <div style={{ marginTop: "4rem" }}>
             <PageContainer>
-              <OrderList orders={totalOrders} />
+              <OrderList orders={combineOrders} />
             </PageContainer>
           </div>
         </ContentLayout>

@@ -7,7 +7,11 @@ const OrderList = ({ orders }) => {
       style={{ display: "flex", flexWrap: "wrap", gap: "16px", width: "100%" }}
     >
       {orders.map((order, index) => (
-        <OrderItem key={`${order.id}-${index}`} order={order} index={index} />
+        <OrderItem
+          key={`${order.productId}-${index}`}
+          order={order}
+          index={index}
+        />
       ))}
     </div>
   );

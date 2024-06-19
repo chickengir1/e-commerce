@@ -49,14 +49,16 @@ export const ProductDetails = styled.div`
 `;
 
 export const ProductImage = styled.img`
-  width: 50px;
-  height: 60px;
+  width: 60px;
+  height: 100px;
+  max-width: 100px;
+  max-height: 100px;
   margin-right: 8px;
 `;
 
 export const OrderActions = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 6.5rem;
   text-align: end;
 `;

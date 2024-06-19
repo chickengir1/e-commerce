@@ -16,6 +16,7 @@ export const OrderProduct = styled.div`
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 4px;
+  margin-top: 8px;
 `;
 
 export const OrderPrice = styled.div`
