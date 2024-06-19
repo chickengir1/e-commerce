@@ -15,7 +15,7 @@ import SupportPage from './pages/SupportPage';
 import AddProductPages from './pages/AddProductPages';
 import UpdateProduct from './components/update/UpdateProductRoot';
 import CardInfo from './pages/CardInfoPage';
-import MG from './components/management/management';
+import MG from './pages/ManagementPage';
 import OC from './components/orders/OrderComplete';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
         <Route path="/add" element={<AddProductPages />} />
         <Route path="/card" element={<CardInfo />} />
         <Route path="/update/:id" element={<UpdateProduct />} />
-        <Route path="/mg" element={<MG />} /> 
+        <Route path="/management" element={<MG />} /> 
         <Route path="/oc" element={<OC />} /> 
       </Routes>
     </Router>

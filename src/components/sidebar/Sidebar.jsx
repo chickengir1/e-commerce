@@ -27,7 +27,7 @@ const Sidebar = () => {
 
   if (isAdmin) {
     menuItems.push({ icon: "dashboard", text: "대시보드", path: "/dashboard" });
-    menuItems.push({ icon: "delivery", text: "주문 관리", path: "/mg" });
+    menuItems.push({ icon: "delivery", text: "주문 관리", path: "/management" });
   }
 
   if (loading) return <div>Loading...</div>;
