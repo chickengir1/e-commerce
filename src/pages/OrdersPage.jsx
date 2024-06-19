@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import OrderList from "../components/orders/OrderList";
 import { PageContainer } from "../components/orders/styles/PageStyles";
 import {
@@ -11,76 +11,69 @@ import NavBar from "../components/nav/nav";
 import useFetchData from "../hook/useFetchData";
 import API_PATHS from "../utils/apiPaths";
 
-const formatOrderItems = (order, priceData) => {
-  return Object.entries(order.sizes).map(([size, quantity]) => {
-    const product = priceData.find(p => p._id === order.productId);
-    const productPrice = product?.price || 0;
-    const totalPrice = productPrice * quantity;
-    return {
-      color: order.color,
-      size,
-      price: productPrice,
-      totalPrice,
-      stock: quantity,
-      images: ["https://via.placeholder.com/150"],
-    };
-  });
-};
-
-const fetchStoredOrders = async (priceData) => {
-  try {
-    const storedOrders = JSON.parse(localStorage.getItem('cart'));
-    if (storedOrders && priceData) {
-      return storedOrders.map((order, index) => {
-        const orderItems = formatOrderItems(order, priceData);
-        return {
-          order_date: new Date().toISOString().split('T')[0],
-          order_id: (10000 + index).toString(),
-          status: "주문 완료",
-          product: {
-            productId: order.productId,
-            name: order.name,
-            orderItems,
-          },
-        };
-      });
-    } else if (!storedOrders) {
-      throw new Error("No orders data found in local storage");
-    }
-  } catch (err) {
-    console.error("Error loading orders data:", err);
-    return [];
-  }
-};
-
 const OrdersPage = () => {
-  const { data: priceData, loading, error } = useFetchData(API_PATHS.PRODUCTS);
-  const [orders, setOrders] = useState([]);
-
-  const loadOrders = useCallback(async () => {
-    if (priceData) {
-      const formattedOrders = await fetchStoredOrders(priceData);
-      setOrders(formattedOrders);
-    }
-  }, [priceData]);
+  const {
+    data: orders,
+    loading: ordersLoading,
+    error: ordersError,
+  } = useFetchData(API_PATHS.ORDER);
+  const {
+    data: products,
+    loading: productsLoading,
+    error: productsError,
+  } = useFetchData(API_PATHS.PRODUCTS);
+  /*const {
+    data: variants,
+    loading: variantsLoading,
+    error: variantsError,
+  } = useFetchData("/api/variant/test");
+*/
+  const [totalOrders, setTotalOrders] = useState([]);
 
   useEffect(() => {
-    loadOrders();
-  }, [loadOrders]);
+    if (orders) {
+      const flatOrders = orders.flatMap((order) =>
+        order.items.map((item) => ({
+          order_date: new Date(order.orderDate).toISOString().split("T")[0],
+          status: order.orderState,
+          size: item.size,
+          // quantity: item.quantity, 랜더링 시킬 방법이 없음
+        }))
+      );
+      setTotalOrders(flatOrders);
+    }
+  }, [orders]);
 
-  const handleDelete = useCallback((orderId) => {
-    setOrders((prevOrders) => {
-      const updatedOrders = prevOrders.filter((order) => order.order_id !== orderId);
-      const storedOrders = JSON.parse(localStorage.getItem('cart'));
-      const updatedStoredOrders = storedOrders.filter((_, index) => (10000 + index).toString() !== orderId);
-      localStorage.setItem('cart', JSON.stringify(updatedStoredOrders));
-      return updatedOrders;
-    });
-  }, []);
+  // variants랑 id 검사한 다음 필터링 된 것 orders랑 id 검사해서 item으로 묶으려고 했는데 진짜 너무 어려워서 못함
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  useEffect(() => {
+    if (products) {
+      const simplifiedProducts = products.map((product) => ({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.images[0] || "https://via.placeholder.com/150",
+      }));
+      console.log("Products:", simplifiedProducts);
+    }
+  }, [products]);
 
+  /*useEffect(() => {
+    if (variants) {
+      const simplifiedVariants = variants.map((variant) => ({
+        id: variant._id,
+        productId: variant.productId,
+        color: variant.color,
+      }));
+      console.log("Variants:", simplifiedVariants);
+    }
+  }, [variants]);
+*/
+  if (ordersLoading || productsLoading) return <p>Loading...</p>;
+  if (ordersError) return <p>Error: {ordersError.message}</p>;
+  if (productsError) return <p>Error: {productsError.message}</p>;
+  // if (variantsError) return <p>Error: {variantsError.message}</p>;
+  // 해결 불가능
   return (
     <>
       <NavBar />
@@ -91,7 +84,7 @@ const OrdersPage = () => {
         <ContentLayout>
           <div style={{ marginTop: "4rem" }}>
             <PageContainer>
-              <OrderList orders={orders} onDelete={handleDelete} />
+              <OrderList orders={totalOrders} />
             </PageContainer>
           </div>
         </ContentLayout>

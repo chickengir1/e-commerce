@@ -13,7 +13,6 @@ import {
   OrderContent,
   OrderLeftSection,
   OrderRightSection,
-  ProductImage,
   ProductDetails,
   OrderActions,
 } from "./styles/PageStyles";
@@ -22,25 +21,24 @@ import OrderEdit from "./OrderEdit";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    width: '500px',
-    height: '370px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    border: 'none'
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "500px",
+    height: "370px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    border: "none",
   },
 };
 
-const OrderItem = ({ order, onDelete }) => {
-  const { order_date, status, product, order_id } = order;
-  const { name: productName, orderItems } = product;
+const OrderItem = ({ order, index }) => {
+  const { order_date, status, size } = order;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,25 +50,24 @@ const OrderItem = ({ order, onDelete }) => {
       <OrderContent>
         <OrderLeftSection>
           <OrderInfo order_date={order_date} status={status} />
-          {orderItems.map((item, index) => (
-            <ProductDetails key={index}>
-              <ProductImage src={item.images[0]} alt={productName} />
-              <div>
-                <OrderProduct>{`${productName} - ${item.color} / ${item.size}`}</OrderProduct>
-                <OrderPrice>{`총 금액 : ${(item.totalPrice).toLocaleString("ko-KR")} 원`}</OrderPrice>
-                <OrderPrice>{`${item.stock} X ${(item.price).toLocaleString("ko-KR")} 원`}</OrderPrice>
-              </div>
-            </ProductDetails>
-          ))}
+          <ProductDetails>
+            <div>
+              <OrderProduct>{`Size: ${size}`}</OrderProduct>
+            </div>
+          </ProductDetails>
         </OrderLeftSection>
         <OrderRightSection>
           <OrderActions>
-            <OrderPrice>{`ID - #${order_id}`}</OrderPrice>
-            <OrderButtons onDelete={onDelete} openModal={openModal} order_id={order_id} />
+            <OrderPrice>{`ID - #${10000 + index}`}</OrderPrice>
+            <OrderButtons openModal={openModal} order_id={index} />
           </OrderActions>
         </OrderRightSection>
       </OrderContent>
-      <OrderEditModal isOpen={isModalOpen} closeModal={closeModal} order={order} />
+      <OrderEditModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        order={order}
+      />
     </OrderContainer>
   );
 };
@@ -82,9 +79,9 @@ const OrderInfo = ({ order_date, status }) => (
   </>
 );
 
-const OrderButtons = ({ onDelete, openModal, order_id }) => (
+const OrderButtons = ({ onDelete, openModal }) => (
   <div style={{ display: "flex", gap: "5px" }}>
-    <OrderActionsButton onClick={() => onDelete(order_id)}>주문 취소</OrderActionsButton>
+    <OrderActionsButton onClick={onDelete}>주문 취소</OrderActionsButton>
     <OrderActionsButton onClick={openModal}>주문 수정</OrderActionsButton>
   </div>
 );
