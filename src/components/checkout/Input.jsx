@@ -1,7 +1,20 @@
-import React from 'react';
-import { InputWrapper, Label, StyledInput, StyledInputHigh } from './styles/InputStyles';
+import React from "react";
+import {
+  InputWrapper,
+  Label,
+  StyledInput,
+  StyledInputHigh,
+} from "./styles/InputStyles";
 
-const Input = ({ label, high, type = "text", value, onChange, placeholder, name }) => (
+const Input = ({
+  label,
+  high,
+  type = "text",
+  value,
+  onChange,
+  placeholder,
+  name,
+}) => (
   <InputWrapper>
     <Label>{label}</Label>
     {high ? (
