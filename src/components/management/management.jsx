@@ -28,7 +28,13 @@ export default function Component() {
     setData: setOrders,
   } = useFetchData("/api/orders");
 
-  const handleStatusChange = (orderId, newStatus) => {};
+  const handleStatusChange = (orderId, newStatus) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order._id === orderId ? { ...order, orderState: newStatus } : order
+      )
+    );
+  };
 
   const handleDelete = (orderId) => {
     setOrders((prevOrders) =>
@@ -85,10 +91,10 @@ export default function Component() {
                         handleStatusChange(order._id, e.target.value)
                       }
                     >
+                      <option value="OrderComplete">주문 완료</option>
                       <option value="Pending">배송 준비 중</option>
                       <option value="Shipped">배송 중</option>
                       <option value="Delivered">배송 완료</option>
-                      <option value="OrderComplete">주문 완료</option>
                     </Select>
                   </StatusTd>
                   <BtnTd>
