@@ -49,6 +49,13 @@ const RegisterBox = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (formData.password.length < 8) {
+      setNotification("비밀번호는 8자리 이상이어야 합니다.");
+      await delay(1500);
+      setNotification("");
+      return;
+    }
+
     const validationError = validateForm(formData);
     if (validationError) {
       setNotification(validationError);

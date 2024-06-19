@@ -16,10 +16,6 @@ export const validateForm = (formData, user = {}) => {
     return "유효한 핸드폰 번호를 입력하세요.";
   }
 
-  if (password.length < 8) {
-    return "비밀번호는 8자리 이상이어야 합니다.";
-  }
-
   if (password !== confirmPassword) {
     return "비밀번호가 일치하지 않습니다.";
   }
