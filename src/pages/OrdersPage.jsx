@@ -17,52 +17,66 @@ const OrdersPage = () => {
     loading: ordersLoading,
     error: ordersError,
   } = useFetchData(API_PATHS.ORDER);
-  const {
-    data: products,
-    loading: productsLoading,
-    error: productsError,
-  } = useFetchData(API_PATHS.PRODUCTS);
 
   const [combineOrders, setCombineOrders] = useState([]);
 
   useEffect(() => {
-    if (orders && products) {
+    if (orders) {
+      // console.log(
+      //   "Orders api 요청 정보 객체 그대로 뽑아 오기 :",
+      //   JSON.stringify(orders)
+      // );
+
       const processedOrders = orders.flatMap((order) =>
-        order.items.map((item) => ({
-          order_date: new Date(order.orderDate).toISOString().split("T")[0],
-          status: order.orderState,
-          size: item.size,
-          quantity: item.quantity,
-          productId: item.product,
-        }))
+        order.items
+          .map((item) => {
+            if (!item || !item.item) {
+              console.error(`상품 정보 없을때: ${JSON.stringify(item)}`);
+              return null;
+            }
+            const color = item.item.color;
+            const product = item.item.productId;
+
+            if (!product || typeof product !== "object") {
+              console.error(`id 타입이 다를때 : ${JSON.stringify(item)}`);
+              return null;
+            }
+
+            const productName = product.name || `Product ${product._id}`;
+            const productPrice = product.price || 0;
+            const productImage =
+              (product.images && product.images[0]) ??
+              "https://via.placeholder.com/150";
+
+            // console.log("productname : ", productName);
+            // console.log("productprice :", productPrice);
+            // console.log("productimage(이미지 배열 첫번째):", productImage);
+
+            return {
+              order_date: new Date(order.orderDate).toISOString().split("T")[0],
+              status: order.orderState,
+              size: item.size,
+              quantity: item.quantity,
+              color,
+              productName,
+              productPrice,
+              productImage,
+            };
+          })
+          .filter(Boolean)
       );
 
-      const processedProducts = products.reduce((acc, product) => {
-        acc[product._id] = {
-          name: product.name,
-          price: product.price,
-          image: product.images[0] || "https://via.placeholder.com/150",
-        };
-        return acc;
-      }, {});
+      // console.log(
+      //   "리턴에 묶인 상품 전체 내역 ",
+      //   JSON.stringify(processedOrders)
+      // );
 
-      const combined = processedOrders.map((order, index) => ({
-        ...order,
-        productName:
-          processedProducts[order.productId]?.name || `Product ${index + 1}`,
-        productPrice: processedProducts[order.productId]?.price || 0,
-        productImage:
-          processedProducts[order.productId]?.image ??
-          "https://via.placeholder.com/150",
-      }));
-
-      setCombineOrders(combined);
+      setCombineOrders(processedOrders);
     }
-  }, [orders, products]);
+  }, [orders]);
 
-  if (ordersLoading || productsLoading) return <p>Loading...</p>;
+  if (ordersLoading) return <p>Loading...</p>;
   if (ordersError) return <p>Error: {ordersError.message}</p>;
-  if (productsError) return <p>Error: {productsError.message}</p>;
 
   return (
     <>

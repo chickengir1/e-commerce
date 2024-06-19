@@ -42,6 +42,7 @@ const OrderItem = ({ order, index }) => {
     order_date,
     status,
     size,
+    color,
     productName,
     productImage,
     productPrice,
@@ -68,7 +69,10 @@ const OrderItem = ({ order, index }) => {
             />
             <div>
               <OrderProduct>{productName}</OrderProduct>
-              <OrderPrice>{`Size: ${size}`}</OrderPrice>
+              <div style={{ display: "flex" }}>
+                <OrderPrice>{`Size: ${size}`}</OrderPrice>
+                <OrderPrice>{`색상: ${color}`}</OrderPrice>
+              </div>
               <OrderPrice>{`주문 수량 : ${quantity} 개`}</OrderPrice>
               <OrderProduct>{`총 가격 : ${totalPrice.toLocaleString(
                 "ko-kr"
@@ -79,7 +83,7 @@ const OrderItem = ({ order, index }) => {
         <OrderRightSection>
           <OrderActions>
             <OrderPrice>{`ID - #${10000 + index}`}</OrderPrice>
-            <OrderButtons openModal={openModal} order_id={index} />
+            <OrderButtons openModal={openModal} />
           </OrderActions>
         </OrderRightSection>
       </OrderContent>
