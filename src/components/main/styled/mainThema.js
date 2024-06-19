@@ -31,7 +31,8 @@ export const Item = styled.div`
   margin: 10px;
   border-radius: 10px;
   box-sizing: border-box;
-  box-shadow: 0 4px 8px rgba(134,144,174, 0.1), 0 6px 15px rgba(134,144,174, 0.1);
+  box-shadow: 0 4px 8px rgba(134, 144, 174, 0.1),
+    0 6px 15px rgba(134, 144, 174, 0.1);
   transition: transform 0.3s ease;
 
   &:hover {
@@ -49,9 +50,13 @@ export const Img = styled.img`
 `;
 
 export const Name = styled.p`
+  max-width: 13rem;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const Price = styled.p`
