@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 export const SliderWrapper = styled.div`
   display: flex;
-  animation: ${({ $itemCount }) => slide($itemCount)} 50s linear infinite;
+  animation: ${({ $itemCount }) => slide($itemCount)} 120s linear infinite;
 
   &:hover {
     animation-play-state: paused;
