@@ -17,17 +17,19 @@ const Sidebar = () => {
   }, [user]);
 
   const menuItems = [
-    { icon: "order", text: "주문 내역", path: "/orders" },
     { icon: "wishlist", text: "장바구니", path: "/carts" },
     { icon: "settings", text: "계정 설정", path: "/account" },
     { icon: "payment", text: "결제 정보", path: "/card" },
-
     { icon: "support", text: "고객센터", path: "/support" },
   ];
 
   if (isAdmin) {
     menuItems.push({ icon: "dashboard", text: "대시보드", path: "/dashboard" });
     menuItems.push({ icon: "delivery", text: "주문 관리", path: "/management" });
+  }
+
+  if (!isAdmin) {
+    menuItems.unshift({ icon: "order", text: "주문 내역", path: "/orders" });
   }
 
   if (loading) return <div>Loading...</div>;
