@@ -8,7 +8,6 @@ export const useUpdate = () => {
   const updateRequest = async (id, body) => {
     setLoading(true);
     try {
-      console.log("Update Request:", body);
       const res = await fetch(`/api/orders/${id}`, {
         method: "PUT",
         headers: {
@@ -17,15 +16,17 @@ export const useUpdate = () => {
         body: JSON.stringify(body),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error(`Error: ${res.statusText}`);
+        throw new Error(data.message || res.statusText);
       }
 
-      const data = await res.json();
       setResponse(data);
       return data;
     } catch (err) {
       setError(err.message);
+      return { message: err.message };
     } finally {
       setLoading(false);
     }

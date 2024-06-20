@@ -41,7 +41,7 @@ const OrderEdit = ({ order, closeModal }) => {
       setIsEditing(false);
       closeModal();
     } else {
-      console.error("Order ID is undefined");
+      alert("Order ID is undefined");
     }
   };
 

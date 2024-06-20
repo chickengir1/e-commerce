@@ -51,7 +51,6 @@ export default function Component() {
     if (!orderToUpdate) return;
 
     const updatedData = {
-      ...orderToUpdate,
       orderState: newStatus,
     };
 
@@ -112,10 +111,10 @@ export default function Component() {
                       }
                       disabled={updateLoading}
                     >
-                      <option value="OrderComplete">주문 완료</option>
-                      <option value="Pending">배송 준비 중</option>
-                      <option value="Shipped">배송 중</option>
-                      <option value="Delivered">배송 완료</option>
+                      <option value="주문완료">주문 완료</option>
+                      <option value="배송 준비 중">배송 준비 중</option>
+                      <option value="배송 중">배송 중</option>
+                      <option value="배송 완료">배송 완료</option>
                     </Select>
                   </StatusTd>
                   <BtnTd>
