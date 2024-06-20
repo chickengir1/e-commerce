@@ -15,14 +15,14 @@ export const Container = styled.div`
 
 export const ImageContainer = styled.div`
   flex: 1;
+  height: 35.5rem;
   min-width: 300px;
-  max-width: 600px;
   padding: 10px;
 `;
 
 export const ProductImage = styled.img`
   width: 100%;
-  height: 98%;
+  height: 100%;
   min-height: 85%;
   border-radius: 8px;
   border: 2px solid #e0e0e0;
@@ -30,8 +30,8 @@ export const ProductImage = styled.img`
 
 export const InfoContainer = styled.div`
   flex: 1;
+  height: 35rem;
   min-width: 300px;
-  max-width: 600px;
   padding: 10px;
   display: flex;
   flex-direction: column;

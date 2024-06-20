@@ -41,6 +41,7 @@ export const Products = styled.div`
   width: 95%;
   height: 100%;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const ProductBox = styled.div`

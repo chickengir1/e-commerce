@@ -34,6 +34,7 @@ export const Item = styled.div`
   box-shadow: 0 4px 8px rgba(134, 144, 174, 0.1),
     0 6px 15px rgba(134, 144, 174, 0.1);
   transition: transform 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     transform: translateY(-16px);
