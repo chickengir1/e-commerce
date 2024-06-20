@@ -6,7 +6,7 @@ export const slide = (itemCount) => keyframes`
 `;
 
 export const Container = styled.div`
-  width: 85%;
+  width: 1280px;
   height: 100%;
   overflow: hidden;
   position: relative;
