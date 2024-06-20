@@ -17,6 +17,10 @@ export const OrderProduct = styled.div`
   font-weight: bold;
   margin-bottom: 4px;
   margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 12rem;
 `;
 
 export const OrderPrice = styled.div`
