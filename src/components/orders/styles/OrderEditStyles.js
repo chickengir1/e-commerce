@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Card = styled.div`
   overflow: hidden;
-  border: 1px solid #97A3C9;
+  border: 1px solid #97a3c9;
   border-radius: 8px;
   width: 450px;
   height: 320px;
@@ -12,14 +12,14 @@ export const CardHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background-color: #EEF2FF;
+  background-color: #eef2ff;
   padding: 16px;
 `;
 
 export const Grid = styled.div`
   display: grid;
   gap: 0.5rem;
-`
+`;
 
 export const CardTitle = styled.div`
   display: flex;
@@ -55,20 +55,22 @@ export const Address = styled.div`
 
 export const Input = styled.input`
   font-size: 0.9rem;
+  width: 100%;
+  border: 1px soild #ddd;
   margin-top: 5px;
   font-family: var(--font-nanumfont);
   padding: 2px;
-`
+`;
 
 export const Separator = styled.div`
   margin: 25px 0 20px 0;
   height: 1px;
-  background-color: #DAE1F4;
+  background-color: #dae1f4;
 `;
 
 export const Button = styled.button`
   padding: 8px 16px;
-  border: 1px solid #97A3C9;
+  border: 1px solid #97a3c9;
   border-radius: 4px;
   background-color: #fff;
   color: #000;

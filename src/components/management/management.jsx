@@ -9,7 +9,6 @@ import {
   DateTh,
   UserTh,
   ProductTh,
-  OrderTh,
   Tr,
   Td,
   NumTd,
@@ -19,6 +18,8 @@ import {
   Button,
 } from "./mg";
 import useFetchData from "../../hook/useFetchData";
+import { useDelete } from "../../hook/useDelete";
+import { useUpdate } from "../../hook/useUpdate";
 
 export default function Component() {
   const {
@@ -27,15 +28,9 @@ export default function Component() {
     error,
     setData: setOrders,
   } = useFetchData("/api/orders");
+  const { loading: deleteLoading, deleteRequest } = useDelete();
+  const { loading: updateLoading, updateRequest } = useUpdate();
   const [orderName, setOrderName] = useState([]);
-
-  const handleStatusChange = (orderId, newStatus) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order._id === orderId ? { ...order, orderState: newStatus } : order
-      )
-    );
-  };
 
   useEffect(() => {
     if (orders) {
@@ -51,10 +46,34 @@ export default function Component() {
     }
   }, [orders]);
 
-  const handleDelete = (orderId) => {
-    setOrders((prevOrders) =>
-      prevOrders.filter((order) => order._id !== orderId)
-    );
+  const handleStatusChange = async (orderId, newStatus) => {
+    const orderToUpdate = orders.find((order) => order._id === orderId);
+    if (!orderToUpdate) return;
+
+    const updatedData = {
+      ...orderToUpdate,
+      orderState: newStatus,
+    };
+
+    const response = await updateRequest(orderId, updatedData);
+    if (response && response.message) {
+      alert("배송 상태가 변경되었습니다.");
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === orderId ? { ...order, orderState: newStatus } : order
+        )
+      );
+    }
+  };
+
+  const handleDelete = async (orderId) => {
+    const response = await deleteRequest(orderId);
+    if (response && response.message) {
+      alert(response.message);
+      setOrders((prevOrders) =>
+        prevOrders.filter((order) => order._id !== orderId)
+      );
+    }
   };
 
   if (loading) return <div>Loading...</div>;
@@ -91,6 +110,7 @@ export default function Component() {
                       onChange={(e) =>
                         handleStatusChange(order._id, e.target.value)
                       }
+                      disabled={updateLoading}
                     >
                       <option value="OrderComplete">주문 완료</option>
                       <option value="Pending">배송 준비 중</option>
@@ -99,8 +119,11 @@ export default function Component() {
                     </Select>
                   </StatusTd>
                   <BtnTd>
-                    <Button onClick={() => handleDelete(order._id)}>
-                      삭제
+                    <Button
+                      onClick={() => handleDelete(order._id)}
+                      disabled={deleteLoading}
+                    >
+                      {deleteLoading ? "삭제 중..." : "삭제"}
                     </Button>
                   </BtnTd>
                 </Tr>

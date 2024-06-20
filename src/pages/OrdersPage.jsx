@@ -22,11 +22,6 @@ const OrdersPage = () => {
 
   useEffect(() => {
     if (orders) {
-      // console.log(
-      //   "Orders api 요청 정보 객체 그대로 뽑아 오기 :",
-      //   JSON.stringify(orders)
-      // );
-
       const processedOrders = orders.flatMap((order) =>
         order.items
           .map((item) => {
@@ -48,13 +43,10 @@ const OrdersPage = () => {
               (product.images && product.images[0]) ??
               "https://via.placeholder.com/150";
 
-            // console.log("productname : ", productName);
-            // console.log("productprice :", productPrice);
-            // console.log("productimage(이미지 배열 첫번째):", productImage);
-
             return {
               order_date: new Date(order.orderDate).toISOString().split("T")[0],
               status: order.orderState,
+              id: order._id,
               size: item.size,
               quantity: item.quantity,
               color,
@@ -65,11 +57,6 @@ const OrdersPage = () => {
           })
           .filter(Boolean)
       );
-
-      // console.log(
-      //   "리턴에 묶인 상품 전체 내역 ",
-      //   JSON.stringify(processedOrders)
-      // );
 
       setCombineOrders(processedOrders);
     }
