@@ -10,22 +10,13 @@ function Category() {
     loading: categoriesLoading,
     error: categoriesError,
   } = useFetchData(API_PATHS.CATEGORIES);
-  const {
-    data: products,
-    loading: productsLoading,
-    error: productsError,
-  } = useFetchData(API_PATHS.PRODUCTS);
 
-  if (categoriesLoading || productsLoading) {
+  if (categoriesLoading) {
     return <div>Loading...</div>;
   }
 
   if (categoriesError) {
     return <div>Error: {categoriesError.message}</div>;
-  }
-
-  if (productsError) {
-    return <div>Error: {productsError.message}</div>;
   }
 
   const images = [

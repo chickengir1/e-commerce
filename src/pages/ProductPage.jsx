@@ -19,37 +19,30 @@ const ProductPage = () => {
   const { categoryName } = useParams();
   const location = useLocation();
   const { state } = location;
-  const { selectedCategory: initialSelectedCategory } = state || {
-    selectedCategory: null,
-  };
+  const { selectedBrand: initialSelectedBrand } = state || {};
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState("all");
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(
-    initialSelectedCategory
-  );
+  const [selectedBrand, setSelectedBrand] = useState(initialSelectedBrand);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const searchInputRef = useRef("");
   const navigate = useNavigate();
 
-  const fetchUrl = "/api/product";
-  const brandUrl = "/api/brand";
-  const categoryUrl = "/api/category";
   const {
     data: products,
     loading: productsLoading,
     error: productsError,
-  } = useFetchData(fetchUrl);
+  } = useFetchData("/api/product");
   const {
     data: brands,
     loading: brandsLoading,
     error: brandsError,
-  } = useFetchData(brandUrl);
+  } = useFetchData("/api/brand");
   const {
     data: categories,
     loading: categoriesLoading,
     error: categoriesError,
-  } = useFetchData(categoryUrl);
+  } = useFetchData("/api/category");
 
   useEffect(() => {
     if (categoryName && categories) {
@@ -62,6 +55,12 @@ const ProductPage = () => {
       }
     }
   }, [categoryName, categories, navigate]);
+
+  useEffect(() => {
+    if (initialSelectedBrand) {
+      setFilterType("brand");
+    }
+  }, [initialSelectedBrand]);
 
   if (productsLoading || brandsLoading || categoriesLoading)
     return <div>Loading...</div>;
@@ -88,7 +87,6 @@ const ProductPage = () => {
     selectedBrand,
     selectedCategory
   );
-
   const searchedProducts = searchProducts(filteredProducts, searchQuery);
 
   return (
@@ -133,17 +131,14 @@ const filterProducts = (
       return product.brand && product.brand._id === selectedBrand;
     } else if (filterType === "category" && selectedCategory) {
       return product.category && product.category._id === selectedCategory;
-    } else {
-      return true;
     }
+    return true;
   });
 };
 
 const searchProducts = (products, searchQuery) => {
-  return products.filter(
-    (product) =>
-      product.name &&
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  return products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 };
 
