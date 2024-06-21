@@ -35,8 +35,8 @@ const OrderEdit = ({ order, closeModal }) => {
         },
       };
       const response = await updateRequest(order.id, updatedData);
-      if (response && response.message) {
-        alert(response.message);
+      if (response) {
+        alert("배송지 정보를 모두 입력해주세요!");
       }
       setIsEditing(false);
       closeModal();
