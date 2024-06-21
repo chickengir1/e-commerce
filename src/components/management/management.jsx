@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import {
   Container,
   Title,
@@ -20,6 +21,13 @@ import {
 import useFetchData from "../../hook/useFetchData";
 import { useDelete } from "../../hook/useDelete";
 import { useUpdate } from "../../hook/useUpdate";
+
+const NoWrapTd = styled(Td)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+`;
 
 export default function Component() {
   const {
@@ -104,7 +112,9 @@ export default function Component() {
                     {new Date(order.orderDate).toISOString().split("T")[0]}
                   </Td>
                   <Td>{order.name}</Td>
-                  <Td>{orderName[index] ?? orderName[index].join(", ")}</Td>
+                  <NoWrapTd>
+                    {orderName[index] ? orderName[index].join(", ") : ""}
+                  </NoWrapTd>
                   <StatusTd>
                     <Select
                       value={order.orderState}

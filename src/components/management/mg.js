@@ -72,6 +72,9 @@ export const Tr = styled.tr`
 export const Td = styled.td`
   padding: 0.5rem;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const NumTd = styled.td`
