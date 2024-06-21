@@ -32,9 +32,11 @@ export default function Component() {
   const { loading: updateLoading, updateRequest } = useUpdate();
   const [orderName, setOrderName] = useState([]);
 
+  console.log(orderName);
+
   useEffect(() => {
     if (orders) {
-      const productName = orders.flatMap((order) =>
+      const productNames = orders.map((order) =>
         order.items.map((item) => {
           if (!item || !item.item || !item.item.productId) {
             return `Product ${item._id}`;
@@ -42,7 +44,7 @@ export default function Component() {
           return item.item.productId.name;
         })
       );
-      setOrderName(productName);
+      setOrderName(productNames);
     }
   }, [orders]);
 
@@ -102,7 +104,7 @@ export default function Component() {
                     {new Date(order.orderDate).toISOString().split("T")[0]}
                   </Td>
                   <Td>{order.name}</Td>
-                  <Td>{orderName[index]}</Td>
+                  <Td>{orderName[index] ?? orderName[index].join(", ")}</Td>
                   <StatusTd>
                     <Select
                       value={order.orderState}
