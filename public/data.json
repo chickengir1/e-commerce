@@ -1,0 +1,50 @@
+[
+  {
+    "product": [
+      {
+        "category": "남성 상의",
+        "brand": "나이키",
+        "variants": [
+          {
+            "variantId": "123",
+            "name": "남자 맨투맨",
+            "color": "Red",
+            "size": "M",
+            "price": 20000,
+            "stock": 50,
+            "shortdescription": "나이키 남성 상의입니다",
+            "longdescription": "나이키에서 2011년 출시한 남성 상의 제품으로 이 옷은 ~~ 소재로 . . .",
+            "images": [
+              "https://via.placeholder.com/150",
+              "https://via.placeholder.com/150"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "product": [
+      {
+        "category": "남성 상의",
+        "brand": "나이키",
+        "variants": [
+          {
+            "variantId": "124",
+            "name": "남자 후드티",
+            "color": "Blue",
+            "size": "L",
+            "price": 30000,
+            "stock": 20,
+            "shortdescription": "나이키 남성 후드티입니다",
+            "longdescription": "나이키에서 2012년 출시한 남성 후드티 제품으로 이 옷은 ~~ 소재로 . . .",
+            "images": [
+              "https://via.placeholder.com/150",
+              "https://via.placeholder.com/150"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
